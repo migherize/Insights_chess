@@ -5,6 +5,13 @@ from selenium_stealth import stealth
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 from selenium.webdriver.common.by import By
+import re, csv
+import pandas as pd
+
+lista0 = []
+lista1 = []
+lista2 = []
+lista3 = []
 
 def initChromeDriver(dr,proxie=None):
 
@@ -51,6 +58,8 @@ def start_lichess():
     login()
 
 def login():
+    #username = 'jab17'
+    #password = '26962323'
     username = 'mherize'
     password = '25832303'
 
@@ -72,40 +81,75 @@ def go_to_insight():
     time.sleep(2)
     driver.find_element_by_xpath('//*[@id="us_profile"]/div[2]/a').click()
     time.sleep(1)
-    variant()
+    
+    #presets
+    driver.find_element_by_xpath('//*[@id="insight"]/div/div[1]/div[2]/a[1]').click()
+    
+    for p in range(1,9):
+        presets(p)
+
+    #Data Frame with Pandas
+    df = pd.DataFrame({'Busqueda': lista0,
+        'Titulos' : lista0,
+        'data' : lista1,
+        'size' : lista2,
+        })
+    df.to_csv('process/scrapy.csv', index=False , encoding='utf-8')
+
+def presets(p):
+    driver.find_element_by_xpath('//*[@id="insight"]/div/div[1]/div[2]/a[1]').click()
+    driver.find_element_by_xpath('//*[@id="insight"]/div/div[1]/div[3]/a['+str(p)+']').click()
+    driver.refresh() 
+    time.sleep(2)
+    html = driver.page_source
+    respObj = Selector(text=html)
+    time.sleep(2)
+    item_title = respObj.xpath('.//th[contains(@class,"")]').getall()
+    column1 = respObj.xpath('.//td[contains(@class,"data")]/text()').getall()
+    column2 = respObj.xpath('.//td[contains(@class,"size")]/text()').getall()
+    lista0.append(item_title)
+    lista1.append(column1)
+    lista2.append(column2)
+    print("titulos:", item_title)
+    print("column1:", column1)
+    print("column2:", column2)
 
 def variant():
     #extrae los primeros datos del isight
     html = driver.page_source
     respObj = Selector(text=html)
-    '''
-    table_xpath = './/table[contains(@class,"slist")]/thead'
-    item_list2 = respObj.xpath(table_xpath)
-    print("item_list2:", item_list2)
-
-    item_list = respObj.xpath('.//table[contains(@class,"slist")]').get()
-    for elem in item_list2:
-        print("elem",elem)
-    '''
-
-    item_list = respObj.xpath('.//th/text()').getall()
-
+    time.sleep(2)
+    item_title = respObj.xpath('.//th[contains(@class,"")]').getall()
     column1 = respObj.xpath('.//td[contains(@class,"data")]/text()').getall()
     column2 = respObj.xpath('.//td[contains(@class,"size")]/text()').getall()
-    print(item_list[0]," | ",item_list[1]," | ",item_list[2])
-    print(item_list[3]," | ",column1[0]," | ",column2[0])
-    print(item_list[4]," | ",column1[1]," | ",column2[1])
-    print(item_list[5]," | ",column1[2]," | ",column2[2])
-    print(item_list[6]," | ",column1[3]," | ",column2[3])
+    lista0.append(item_title)
+    lista1.append(column1)
+    lista2.append(column2)
+    #for l in item_title:
+    #    title = re.findall(r'\>((?:\S\s?)+)\<',l)
+    #    print("title",title)
+
+    print("titulos:", item_title)
+    print("column1:", column1)
+    print("column2:", column2)
     
-    #print("item_list:", item_list)
-    #print("column1:", column1)
-    #print("column2:", column2)
-
-
-
-
-
+    #presets
+    driver.find_element_by_xpath('//*[@id="insight"]/div/div[1]/div[2]/a[1]').click()
+    driver.find_element_by_xpath('//*[@id="insight"]/div/div[1]/div[3]/a[1]').click()
+    driver.refresh() 
+    time.sleep(2)
+    html = driver.page_source
+    respObj2 = Selector(text=html)
+    time.sleep(5)
+    item_title = respObj2.xpath('.//th[contains(@class,"")]').getall()
+    column1 = respObj2.xpath('.//td[contains(@class,"data")]/text()').getall()
+    column2 = respObj2.xpath('.//td[contains(@class,"size")]/text()').getall()
+    print("item_title:", item_title)
+    print("column2:", column2)
+    print("column1:", column1)
+    lista0.append(item_title)
+    lista1.append(column1)
+    lista2.append(column2)
 
 dr = ChromeDriverManager().install()
 driver = initChromeDriver(dr)
