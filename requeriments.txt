@@ -1,6 +1,0 @@
-Python==3.9.9
-pip==22.0.2
-Scrapy==2.4.1
-selenium==4.1.0
-selenium-stealth==1.0.6
-webdriver-manager==3.5.2

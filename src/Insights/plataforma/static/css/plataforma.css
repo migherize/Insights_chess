@@ -1,0 +1,27 @@
+.login-box {
+  width: 300px;
+  height: 400px;
+  position: fixed;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+.box {
+  background-color: rgba(19, 35, 47, 0.9);
+}
+.label {
+  color: white;
+}
+.input {
+  background-color: rgba(19, 35, 47, 0.9);
+  color: white;
+}
+.select:focus {
+  border-color: green;
+}
+#logo{
+    display:block;
+    margin:auto;
+}
