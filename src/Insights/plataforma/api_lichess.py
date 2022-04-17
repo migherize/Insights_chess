@@ -2,8 +2,8 @@ import requests
 import json
 import os 
 
-token = "lip_0obpMyLkJNap1lEFGZjA"
-cabeceras = {'Authorization': 'Bearer lip_0obpMyLkJNap1lEFGZjA'}
+token = os.getenv('token')
+cabeceras = os.getenv('cabeceras')
 base_url = "https://lichess.org/api"
 
 def account():

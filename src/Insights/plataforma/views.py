@@ -22,9 +22,6 @@ def signUp(request):
             if user is not None:
                 login(request, user)
                 elo = user.perfil.rankings.all()
-                partidas = all_games()
-                print("partidas",partidas.status_code)
-                print("partidas",partidas.text)
                 return render(request, 'Views/Home.html', {'elo': elo })
             else:
                 get_account = account()
@@ -74,6 +71,10 @@ def signUp(request):
                     login(request, user)
                     elo = user.perfil.rankings.all()
                     print("elo",elo)
+                    # informacion de todas las partidas
+                    partidas = all_games()
+                    print("partidas",partidas.status_code)
+                    print("partidas",partidas.text)
                     return render(request, 'Views/Home.html', {'elo': elo})
                 else:
                     print("fallo en api lichess")
