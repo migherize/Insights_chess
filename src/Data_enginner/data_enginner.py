@@ -4,199 +4,170 @@ import string
 from datetime import datetime
 from os import path
 import re, csv
-#import pandas as pd
+import pandas as pd
+import requests
+
+#constanst
+input_path = '/Users/migherize/SourceTree/Insights_chess/src/Data_enginner/input_request'
+split_path = '/Users/migherize/SourceTree/Insights_chess/src/Data_enginner/input_split'
+output_split_path = '/Users/migherize/SourceTree/Insights_chess/src/Data_enginner/output_split'
+join_path = '/Users/migherize/SourceTree/Insights_chess/src/Data_enginner/join_split'
+output = '/Users/migherize/SourceTree/Insights_chess/src/Data_enginner/output'
+workname = 'data.pgn'
+token = "lip_0obpMyLkJNap1lEFGZjA"
+cabeceras = {'Authorization': 'Bearer lip_0obpMyLkJNap1lEFGZjA'}
+base_url = "https://lichess.org/api"
 
 def clean_text(text, replace_commas_for_spaces=True):
     text = str(text)
     if not isinstance(text, float) and not isinstance(text, int):
         text = ''.join([c for c in text if c in string.printable])
         if replace_commas_for_spaces:
-            text = text.replace('  ',' ').replace('\xa0','').replace("\n", '').replace("\t", '').replace("\r", '').strip()
+            text = text.replace('  ',' ').replace('\xa0','').replace("\n", '').replace("\t", '').replace("\r", '').replace('"', '').strip()
         else:
-            text = text.replace('  ',' ').replace('\xa0','').replace("\n", '').replace("\t", '').replace("\r", '').strip()
+            text = text.replace('  ',' ').replace('\xa0','').replace("\n", '').replace("\t", '').replace("\r", '').replace('"', '').strip()
     if text == 'nan':
         text = ''
     return text
 
-#constanst
-input_path = '/Users/migherize/SourceTree/Insights_chess/src/Data_enginner/input'
-workname = 'herize.pgn'
-exp_jugadas = r'[0-9]+\.\s*[A-Za-z0-9+-=!?#]+\s[A-Za-z0-9+-=!?#]+|[0-9]+\.\s*[A-Za-z0-9+-=!?#]+'
-jugadas_white = r'^[0-9]+\.\s*[A-Za-z0-9+-=!?#]+'
-jugadas_black = r'\s+[A-Za-z0-9+-=!?#]+$'
-
-list_event = []
-list_site = []
-list_date = []
-list_white = []
-list_black = []
-list_result = []
-list_time = []
-list_eloWhite = []
-list_eloBlack = []
-list_RatingDiff_W = []
-list_RatingDiff_B = []
-list_variant = []
-list_time_control = []
-list_ECO = []
-list_Opening = []
-list_Termination = []
-list_data = []
-#Funciones
-
-def prueba(archive):
-    lines = archive.readline()
-    print("lines",len(lines))
-    cont = 0
-
-    if len(lines) > 0:
-        for line in archive.readlines():
-            cont += 1
-            column_aux = re.findall(r'((?:\S\s?)+)',line)
-            if column_aux:
-                #ignorar = re.findall(r'^Permit #|^BUILDING|^PERMITS|^Zone|^Application Date|Page [0-9]+',line.strip())
-                ignorar = False
-                if ignorar:
-                    continue
-                else:
-                    row_1 = re.findall(r'^\[Event\s*"((?:\S\s*?)+)"\]',line.strip())
-                    row_2 = re.findall(r'^\[Site\s*"((?:\S\s?)+)"\]',line.strip())
-                    row_3 = re.findall(r'^\[Date\s*"((?:\S\s?)+)"\]',line.strip())
-                    row_4 = re.findall(r'^\[White\s*"((?:\S\s?)+)"\]',line.strip())
-                    row_5 = re.findall(r'^\[Black\s*"((?:\S\s?)+)"\]',line.strip())
-                    row_6 = re.findall(r'^\[Result\s*"((?:\S\s?)+)"\]',line.strip())
-                    row_7 = re.findall(r'^\[UTCDate\s*"((?:\S\s?)+)"\]',line.strip())
-                    row_8 = re.findall(r'^\[UTCTime\s*"((?:\S\s?)+)"\]',line.strip())
-                    row_9 = re.findall(r'^\[WhiteElo\s*"((?:\S\s?)+)"\]',line.strip())
-                    row_10 = re.findall(r'^\[BlackElo\s*"((?:\S\s?)+)"\]',line.strip())
-                    row_11 = re.findall(r'^\[WhiteRatingDiff\s*"((?:\S\s?)+)"\]',line.strip())
-                    row_12 = re.findall(r'^\[Variant\s*"((?:\S\s?)+)"\]',line.strip())
-                    row_13 = re.findall(r'^\[TimeControl\s*"((?:\S\s?)+)"\]',line.strip())
-                    row_14 = re.findall(r'^\[ECO\s*"((?:\S\s?)+)"\]',line.strip())
-                    row_15 = re.findall(r'^\[Opening\s*"((?:\S\s?)+)"\]',line.strip())
-                    row_16 = re.findall(r'^\[Termination\s*"((?:\S\s?)+)"\]',line.strip())
-                    row_data = re.findall(r'^1.|^0-1|^1-0',line.strip())
-                    #column_fecha = re.findall(r'^[0-9]+/[0-9]+/[0-9]+',line.strip())
-                    
-                    if row_1:
-                        list_event.append(column_aux[0])
-                    if row_2:
-                        list_site.append(column_aux[0])
-                    if row_3:
-                        list_date.append(column_aux[0])
-                    if row_4:
-                        list_white.append(column_aux[0])
-                    if row_5:
-                        list_black.append(column_aux[0]) 
-                    if row_6:
-                        list_result.append(column_aux[0])
-                    if row_7:
-                        list_time.append(column_aux[0])
-                    if row_8:
-                        list_eloWhite.append(column_aux[0])
-                    if row_9:
-                        list_eloBlack.append(column_aux[0])
-                    '''
-                    if row_10:
-                        if len(list_event)-1 == len(list_RatingDiff_W):
-                            list_RatingDiff_W.append(column_aux[0]) 
-                        else:
-                            list_RatingDiff_W.append('')     
-                    if row_11:
-                        if len(list_event)-1 == len(list_RatingDiff_B):
-                            list_RatingDiff_B.append(column_aux[0]) 
-                        else:
-                            print("line",cont)
-                            break
-                            list_RatingDiff_B.append('') 
-                    '''
-                    if row_12:
-                        list_variant.append(column_aux[0])     
-                    if row_13:
-                        list_time_control.append(column_aux[0])  
-                    if row_14:
-                        list_ECO.append(column_aux[0])     
-                    if row_15:
-                        list_Opening.append(column_aux[0])  
-                    if row_16:
-                        list_Termination.append(column_aux[0])  
-                    if row_data:
-                        list_data.append(line) 
-                        print("data",line)
-                        if len(list_event) != len(list_data):
-                            print("line",cont)
-                            break
-
-        #separacion de jugadas
-        for game in list_data:
-            cont1 = 1
-            cont2 = 1
-            string1 = '{}.'.format(cont1)
-            string2 = '{}..'.format(cont2)  
-            row_data = re.findall(r'^1.',game)
+def split_dataframe(df,user):
+    win_white = 0
+    win_black = 0
+    draw_white = 0
+    draw_black = 0
+    lose_white = 0
+    lose_black = 0
+    
+    Eco_white_win = []
+    Eco_black_win = []
+    
+    Eco_white_draw = []
+    Eco_black_draw = []
+    
+    Eco_white_lose = []
+    Eco_black_lose = []
+    
+    for i in df.index: 
+        #print("Result: ", str(df['Result'][i]), "ECO: ", str(df['ECO'][i]))
+        # valores positivos
+        if user == str(df['Blancas'][i]).lower() and str(df['Result'][i]) == '1-0':
+            win_white += 1
+            Eco_white_win.append(str(df['ECO'][i]))
+        elif user == str(df['Negras'][i]).lower() and str(df['Result'][i]) == '0-1':
+            win_black += 1
+            Eco_black_win.append(str(df['ECO'][i]))
+        
+        # valores neutros
+        elif user == str(df['Blancas'][i]).lower() and str(df['Result'][i]) == '1/2-1/2':
+            draw_white += 1
+            Eco_white_draw.append(str(df['ECO'][i]))
             
-                        
+        elif user == str(df['Negras'][i]).lower() and str(df['Result'][i]) == '1/2-1/2':
+            draw_black += 1
+            Eco_black_draw.append(str(df['ECO'][i]))
+        
+        # valores negativos
+        elif user == str(df['Negras'][i]).lower() and str(df['Result'][i]) == '1-0':
+            lose_white += 1
+            Eco_white_lose.append(str(df['ECO'][i]))
+            
+        elif user == str(df['Blancas'][i]).lower() and str(df['Result'][i]) == '0-1':
+            lose_black += 1
+            Eco_black_lose.append(str(df['ECO'][i]))
+            
+        else:
+            print(str(df['Result'][i]),str(df['Negras'][i]))
+            print(str(df['Blancas'][i]),str(df['Result'][i]))
+
+    print("win_white:",win_white)
+    print("win_black:",win_black)
+    print("draw_white:",draw_white)
+    print("draw_black:",draw_black)
+    print("lose_white:",lose_white)
+    print("lose_black:",lose_black)
+
+    if win_white != 0 and win_black != 0 and draw_white != 0 and draw_black != 0 and lose_white != 0 and lose_black != 0:
+        print("Victorias con Blancas",max(set(Eco_white_win), key = Eco_white_win.count), Eco_white_win.count(max(set(Eco_white_win), key = Eco_white_win.count)))        
+        print("Victorias con Negras",max(set(Eco_black_win), key = Eco_black_win.count), Eco_black_win.count(max(set(Eco_black_win), key = Eco_black_win.count)))        
+        print("tablas con Blancas",max(set(Eco_white_draw), key = Eco_white_draw.count), Eco_white_draw.count(max(set(Eco_white_draw), key = Eco_white_draw.count)))        
+        print("tablas con Blancas",max(set(Eco_black_draw), key = Eco_black_draw.count), Eco_black_draw.count(max(set(Eco_black_draw), key = Eco_black_draw.count)))        
+        print("Perdi con Blancas",max(set(Eco_white_lose), key = Eco_white_lose.count), Eco_white_lose.count(max(set(Eco_white_lose), key = Eco_white_lose.count)))        
+        print("Perdi con Blancas",max(set(Eco_black_lose), key = Eco_black_lose.count), Eco_black_lose.count(max(set(Eco_black_lose), key = Eco_black_lose.count)))        
+        codigo_white_win = max(set(Eco_white_win), key = Eco_white_win.count)
+        num_white_win = Eco_white_win.count(max(set(Eco_white_win), key = Eco_white_win.count))
+        
+        codigo_black_win = max(set(Eco_black_win), key = Eco_black_win.count)
+        num_black_win = Eco_black_win.count(max(set(Eco_black_win), key = Eco_black_win.count))
+        
+        codigo_white_draw = max(set(Eco_white_draw), key = Eco_white_draw.count)
+        num_white_draw = Eco_white_draw.count(max(set(Eco_white_draw), key = Eco_white_draw.count))
+        
+        codigo_black_draw = max(set(Eco_black_draw), key = Eco_black_draw.count)
+        num_black_draw = Eco_black_draw.count(max(set(Eco_black_draw), key = Eco_black_draw.count))
+
+        codigo_white_lose = max(set(Eco_white_lose), key = Eco_white_lose.count)
+        num_white_lose = Eco_white_lose.count(max(set(Eco_white_lose), key = Eco_white_lose.count))
+
+        codigo_black_lose = max(set(Eco_black_lose), key = Eco_black_lose.count)
+        num_black_lose = Eco_black_lose.count(max(set(Eco_black_lose), key = Eco_black_lose.count))
+
     else:
-        print("data vacia")
-    
-    
-# Lectura de task de entrada
-def split_color(game):
-    tupla_color = []
-    moves_white = []
-    moves_black = []
+        codigo_white_win = -1
+        num_white_win = -1
+        codigo_black_win = -1
+        num_black_win= -1
+        codigo_white_draw= -1
+        num_white_draw= -1
+        codigo_black_draw= -1
+        num_black_draw= -1
+        codigo_white_lose= -1
+        num_white_lose= -1
+        codigo_black_lose= -1
+        num_black_lose= -1
+
+    return codigo_white_win, num_white_win, codigo_black_win, num_black_win, codigo_white_draw, num_white_draw, codigo_black_draw, num_black_draw, codigo_white_lose, num_white_lose, codigo_black_lose, num_black_lose, win_white, draw_white,lose_white, win_black, draw_black ,lose_black
+
+def split_Header(info):
     list_white = []
     list_black = []
-    
-    for g in game:
-        result = re.findall(exp_jugadas,g.strip())
-        if result:
-            #print("result",result)
-            #tupla_color.append(result[0])
-            tupla_par = []
-            for r in result:
-                #print(r)
-                jugada = re.search(jugadas_white,r.strip())
-                if jugada:
-                    num = re.search(r'^[0-9]+\.',r.strip())
-                    if num:
-                        #print("move",r[num.end():jugada.end()].strip(),r[jugada.end():].strip())
-                        white = r[num.end():jugada.end()].strip()
-                        black = r[jugada.end():].strip()
-                        moves = white,black
-                        tupla_par.append(moves)
-                        moves_white.append(white)
-                        moves_black.append(black)
-                        #moves_white.append(r[num.end():jugada.end()])
-                        #moves_black.append(r[jugada.end():])
-            tupla_color.append(tupla_par)
-            list_white.append(moves_white)
-            list_black.append(moves_black)
-        #print("----------------")
-    #print("tupla_color",len(tupla_color))
-    #print("list_white",len(list_white))
-    #print("list_black",len(list_black))
-    return tupla_color, list_white, list_black
-    
-def split_game (pgn):
+    list_ECO = []
+    list_opening = []
     list_result = []
-    list_game = []
-    for ite,game in enumerate(pgn):
-        #print(ite,"*",game)
-        #print("game",len(game))
-        result = re.findall(r'1-0$|0-1$|1/2-1/2$',game.strip())
-        if result:
-            list_result.append(result[0])
-            list_game.append(game.strip().replace(result[0],''))
+    
+    for i in info:
+        for j in i:
+            aux1 = re.findall(r'^White\s',str(j))
+            aux2 = re.findall(r'^Black\s',str(j))
+            aux3 = re.findall(r'^Result',str(j))
+            aux4 = re.findall(r'^ECO',str(j))
+            aux5 = re.findall(r'^Opening',str(j))
+            if aux1:
+                list_white.append(clean_text(j.replace(aux1[0],'')).strip())
+            if aux2:
+                list_black.append(clean_text(j.replace(aux2[0],'')).strip())
+            if aux3:
+                list_ECO.append(clean_text(j.replace(aux3[0],'').replace('?','-1')))
+            if aux4:
+                list_opening.append(clean_text(j.replace(aux4[0],'').replace('?','-1')))
+            if aux5:
+                list_result.append(clean_text(j.replace(aux5[0],'').replace('?','-1')))
+    
+    return list_white,list_black,list_ECO,list_opening,list_result
 
-    return list_result, list_game
+def select_split():
+    # Lectura de png
+    input_split = os.listdir(split_path)
+    for num,name in enumerate(input_split):
+        if name == '.DS_Store':
+            input_split.pop(num)
+    return input_split
 
 def data_split(archive):
     lines = archive.readline()
     cont = 0
     list_titles = []
-    list_cabecera = []
     list_data = [] 
+    list_cabecera = []
     
     if lines:
         for line in archive.readlines():
@@ -212,49 +183,107 @@ def data_split(archive):
                     
                 else:
                     if band:
+                        #print("list_cabecera",list_cabecera)
                         list_titles.append(list_cabecera)
+                        #print("list_titles",list_titles)
                         list_data.append(clean_text(line))                
                         band = False
+                        list_cabecera = []
+                        #numero = input("continuar")
                     else:
                         list_data[-1] = list_data[-1]+' '+ clean_text(line)
     
-    #print("list_titles",len(list_titles))
-    #print("list_data",len(list_data))
+        #print("list_titles afuera",list_titles)
+        #numero = input("continuar ")
+    
     return list_titles,list_data
 
-# input_pgn = os.listdir(input_pgn)
 
-if os.path.isfile(path.join(input_path, workname)):
-    #main
-    archivo = open(path.join(input_path, workname), "r")
-    #split_info(list_info)
-    list_info, list_game = data_split(archivo)
-    resultados, game = split_game(list_game)
-    tupla_game, move_white, move_black = split_color(game)
+def all_games(df):
+    list_user = []
+    for i in df.index:
+        print(i, df['Users'][i])
+        list_user.append(str(df['Users'][i]))
+        
+    return list_user
+
+def select_api(user):
+    #https://lichess.org/@/mherize/download
+    #nick = requests.get(base_url+'/games/user/mherize?analysed=false&tags=true&clocks=true&evals=true&opening=true&perfType=ultraBullet%2Cbullet%2Cblitz%2Crapid%2Cclassical',headers=cabeceras)
+    complement = '/games/user/{}?tags=true&clocks=false&evals=false&opening=true'.format(user)
+    nick = requests.get(base_url+complement,headers=cabeceras)
+    print(nick.status_code)
+    #print(nick.content)
+    print("----------------")
+    with open(os.path.join(split_path,('{}.pgn'.format(user))), 'w') as f:
+        f.writelines(nick.text)
+    return nick
+
+# Lectura de task de entrada
+input_api = os.listdir(input_path)
+for num,name in enumerate(input_api):
+    if name == '.DS_Store':
+        input_api.pop(num)
+
+list_user = []
+
+if len(input_api) > 0:
+    df = pd.read_csv(os.path.join(input_path,input_api[0]))
+    print(df)
+    #print("Vamos a consultar a la Api")
+    nick = all_games(df)
+    #for n in nick:
+    #    data = select_api(n)
+    pgn = select_split()
+    if len(pgn) > 0:
+        '''for num,p in enumerate(pgn):
+            list_user = []
+            print("vamos a separar", p)
+            archivo = open(path.join(split_path, p), "r")
+            list_info, list_game = data_split(archivo)
+            print("nick.index(p.replace('.pgn',''))",nick.index(p.replace('.pgn','')))
+            print("list_info",len(list_info))
+            print("list_game",len(list_game))
+            usuario = p.replace('.pgn','')
+            print("usuario",usuario)
+            for i in list_info:
+                list_user.append(usuario)
+            
+            df = pd.DataFrame(list(zip(list_user,list_info,list_game)), columns = ['ID User','Headers','Move'])
+            df.to_csv(path.join(output_split_path,'{}_TableGame.csv'.format(usuario)), index = False)
     
-    #Tamaños
-    print("********* Tamaños *********")
-    print("list_info",len(list_info))
-    print("list_game",len(list_game))
-    print("resultados",len(resultados))
-    print("game",len(game))
-    print("tupla_game",len(tupla_game))
-    print("move_white",len(move_white))
-    print("move_black",len(move_black))
-    '''
-    print("list_event",len(list_event))
-    print("list_site",len(list_site))
-    print("list_date",len(list_date))
-    print("list_white",len(list_white))
-    print("list_black",len(list_black))
-    print("list_result",len(list_result))
-    print("list_time",len(list_time))
-    print("list_eloWhite",len(list_eloWhite))
-    print("list_eloBlack",len(list_eloBlack))
-    print("list_variant",len(list_variant))
-    print("list_time_control",len(list_time_control))
-    print("list_ECO",len(list_ECO))
-    print("list_Opening",len(list_Opening))
-    print("list_Termination",len(list_Termination))
-    #print("list_data",len(list_data))
-    '''
+            list_white, list_black, list_result, list_ECO, list_Opening = split_Header(list_info)
+            print("White",len(list_white))
+            print("list_black",len(list_black))
+            print("list_result",len(list_result))
+            print("list_ECO",len(list_ECO))
+            print("list_Opening",len(list_Opening))
+            
+            df = pd.DataFrame(list(zip(list_white,list_black,list_result,list_ECO,list_Opening)), columns = ['Blancas','Negras','Result','ECO','Opening'])
+            print(df)
+            df.to_csv(path.join(join_path,'{}_TableHeader.csv'.format(usuario)), index = False)
+            '''
+        # Join
+        input_join = os.listdir(join_path)
+        for num,name in enumerate(input_join):
+            if name == '.DS_Store':
+                input_join.pop(num)
+        
+        print("input_join",len(input_join))
+        for i,j in enumerate(input_join):
+            print("i",i,j)
+            nick = re.findall(r'((?:\S\s?)+)_', j)
+            user = str(nick[0]).lower()
+            df = pd.read_csv(path.join(join_path, j))
+            print(user,"path.join(join_path, i)",path.join(join_path, j))
+            print(df.replace('\"',''))
+            
+            codigo_white_win, num_white_win, codigo_black_win, num_black_win, codigo_white_draw, num_white_draw, codigo_black_draw, num_black_draw, codigo_white_lose, num_white_lose, codigo_black_lose, num_black_lose, win_white, draw_white,lose_white, win_black, draw_black ,lose_black = split_dataframe(df,user) 
+            if i == 0:
+                df2 = pd.DataFrame(columns = ['Jugador','Partidas','Victoria Blancas','Tablas Blancas','Perdidas Blancas','Victorias Negras','Tablas Negras','Perdidas Negras','No. Victorias Blancas','No. Tablas Blancas','No. Perdidas Blancas','No. Victorias Negras','No. Tablas Negras','No. Perdidas Negras', 'Cod. Victorias Blancas','Cod. Tablas Blancas','Cod. Perdidas Blancas','Cod. Victorias Negras','Cod. Tablas Negras','Cod. Perdidas Negras'],index=range(100))
+                df2.iloc[i] = (user,len(df),win_white,draw_white,lose_white,win_black,draw_black,lose_black, num_white_win, num_white_draw, num_white_lose, num_black_win, num_black_draw, num_black_lose, codigo_white_win, codigo_white_draw, codigo_white_lose, codigo_black_win, codigo_black_draw, codigo_black_lose)
+            else:
+                df2.iloc[i] = (user,len(df),win_white,draw_white,lose_white,win_black,draw_black,lose_black, num_white_win, num_white_draw, num_white_lose, num_black_win, num_black_draw, num_black_lose, codigo_white_win, codigo_white_draw, codigo_white_lose, codigo_black_win, codigo_black_draw, codigo_black_lose)
+                
+            print(df2)
+            df2.to_csv(path.join(output,'Cluster.csv'), index = False)

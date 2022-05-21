@@ -1,0 +1,21 @@
+[Event "Rated Blitz game"]
+[Site "https://lichess.org/GPeRxdPY"]
+[Date "2021.05.05"]
+[White "JavierSalvador12"]
+[Black "CrowTrop"]
+[Result "1-0"]
+[UTCDate "2021.05.05"]
+[UTCTime "22:18:15"]
+[WhiteElo "1500"]
+[BlackElo "1346"]
+[WhiteRatingDiff "+161"]
+[BlackRatingDiff "-2"]
+[Variant "Standard"]
+[TimeControl "180+2"]
+[ECO "B06"]
+[Opening "Modern Defense: Mongredien Defense"]
+[Termination "Normal"]
+
+1. e4 g6 2. d4 Bg7 3. Nf3 b6 4. Bf4 Bb7 5. Nc3 d6 6. Bc4 e5 7. dxe5 Nc6 8. Bxf7+ Kxf7 9. Ng5+ Kf8 10. Ne6+ Kf7 11. Nxd8+ Nxd8 1-0
+
+
