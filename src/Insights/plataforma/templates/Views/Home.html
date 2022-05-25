@@ -57,13 +57,13 @@
                     <span >{{ user.username }}</span>
                 </div>
                     <br>
-                    <span >Nº de Partidas: {{ user.perfil.rated }} </span>
+                    <span >Nº de Partidas: {{ user.nick.rated }} </span>
                     <br>
-                    <span >Nº de Ganadas: {{ user.perfil.n_win }}</span>
+                    <span >Nº de Ganadas: {{ user.nick.n_win }}</span>
                     <br>
-                    <span >Nº de Tablas: {{ user.perfil.n_draw }}</span>
+                    <span >Nº de Tablas: {{ user.nick.n_draw }}</span>
                     <br>
-                    <span >Nº de Perdidas: {{ user.perfil.n_loss }}</span>
+                    <span >Nº de Perdidas: {{ user.nick.n_loss }}</span>
                     <br>
               </div>  
               {% else %}
@@ -121,7 +121,7 @@
                         <tbody >
                             {% for e in elo%}
                             <tr>
-                                <th>{{ e.nombre }}</th>
+                                <th>{{ e.name }}</th>
                                 <th>{{ e.games }}</th>
                                 <th>{{ e.rating }}</th>
                                 <th>{{ e.rd }}</th>
@@ -133,9 +133,16 @@
                     
                 </div>
                 <br />
-                
                 <div class="card is-hidden1">
-                    <div class="card-header"><p class="card-header-title">Header</p></div>
+                    <div class="card-header"><p class="card-header-title">Partidas Propias</p></div>
+                    <a class="tag is-dark is-light" href="{% url 'games' username=user.username %}" > EXTRAER</a>
+                    {% block games %}
+                    {% endblock %}
+                </div>
+                <br />
+
+                <div class="card is-hidden1">
+                    <div class="card-header"><p class="card-header-title">Estilo de Juego</p></div>
                     <div class="card-content"><div class="content">Content</div></div>
                 </div>
                 <br />
@@ -157,14 +164,9 @@
                     <div class="card-content"><div class="content">Content</div></div>
                 </div>
                 <br />
+
                 
-                <div class="card is-hidden1">
-                    <div class="card-header"><p class="card-header-title">Header</p></div>
-                    <div class="card-content"><div class="content">Content</div></div>
-                </div>
-                <br />
                 <button class="button is-large is-success is-rounded is-focused has-text-weight-bold">Click here</button>
-                
                 </div>
             </div>
         </section>

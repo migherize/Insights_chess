@@ -1,9 +1,9 @@
 import requests
-import json
 import os 
 
-token = os.getenv('token')
-cabeceras = os.getenv('cabeceras')
+token = os.getenv('token_lichess')
+cabeceras = {'Authorization': 'Bearer {}'.format(token)}
+split_path = '/Users/migherize/Sourcetree/InsightsChess/src/Insights/input'
 base_url = "https://lichess.org/api"
 
 def account():
@@ -14,11 +14,26 @@ def account():
     print("----------------")
     return nick
 
-def all_games():
-    print("all_games")
-    nick = requests.get(base_url+'/games/user/mherize?analysed=false&tags=true&clocks=true&evals=true&opening=true&perfType=ultraBullet%2Cbullet%2Cblitz%2Crapid%2Cclassical',headers=cabeceras)
+def all_games(user):
+    complement = '/games/user/{}?tags=true&clocks=false&evals=false&opening=true'.format(user)
+    print("complement",complement)
+    nick = requests.get(base_url+complement,headers=cabeceras)
     print(nick.status_code)
-    print(nick.text)
-    with open(os.path.join(os.getcwd(),'my-data.pgn'), "w") as f:
-        f.write(nick.text)
+    print("----------------")
+    with open(os.path.join(split_path,('{}.pgn'.format(user))), 'w') as f:
+        f.writelines(nick.text)
     return nick
+
+def select_png(user):
+    # Lectura de task de entrada
+    input_api = os.listdir(split_path)
+    for num,name in enumerate(input_api):
+        if name == '.DS_Store':
+            input_api.pop(num)
+
+    if ('{}.pgn'.format(user)) in input_api:
+        return 1
+    
+    return 0
+
+#account()
