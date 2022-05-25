@@ -1,0 +1,23 @@
+{% extends 'Views/base.html' %}
+{% load static %}
+
+{% block title %}	Login	{% endblock %}
+
+{% block login %}
+
+<p class="control">
+  <a href="{% url 'login' %}">
+    <button class="button is-medium is-fullwidth" style="background-color:#0000FF; border-color:#0000FF;">
+            <i class="fa fa-user" style="color:white;" > Iniciar Sesión</i>
+    </button>
+  </a>
+  <a href="{% url 'register' %}">
+  <button class="button is-link is-medium is-fullwidth" >
+      <i class="fas fa-home" > Registrarme</i>
+  </button>
+</a>
+</p>
+    <div class="hero is-dark" style="text-align:center;">
+<a href="https://github.com/migherize/Cursos-Online-de-Ajedrez" style="color:white;"> <i class="fab fa-github"></i> @migherize</a>
+</div>
+{% endblock %}
