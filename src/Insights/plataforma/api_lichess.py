@@ -6,16 +6,16 @@ cabeceras = {'Authorization': 'Bearer {}'.format(token)}
 split_path = '/Users/migherize/Sourcetree/InsightsChess/src/Insights/input'
 base_url = "https://lichess.org/api"
 
-def account():
+def account(user):
     print("acoount")
-    nick = requests.get(base_url+'/account',headers=cabeceras)
+    nick = requests.get(base_url+'/user/{}'.format(user),headers=cabeceras)
     print(nick.status_code)
     print(nick.content)
     print("----------------")
     return nick
 
 def all_games(user):
-    complement = '/games/user/{}?tags=true&clocks=false&evals=false&opening=true'.format(user)
+    complement = '/games/user/{}?tags=true&clocks=false&evals=false&opening=true'.format(str(user).lower)
     print("complement",complement)
     nick = requests.get(base_url+complement,headers=cabeceras)
     print(nick.status_code)

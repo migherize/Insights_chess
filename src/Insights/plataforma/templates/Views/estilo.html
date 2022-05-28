@@ -1,0 +1,38 @@
+{% extends 'Views/Home.html' %}
+{% load static %}
+
+{% block title %}	Insights	{% endblock %}
+
+{% block insight %}
+<div class="card">
+    <div class="card-header"><p class="card-header-title">Total de Partidas Jugadas: {{ data.games }}</p></div>
+    <div class="card-content"><div class="content">
+      <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+        <thead>
+          <tr>
+            <th><abbr title="">Insights</abbr></th>
+            <th><abbr title="">Victorias Blancas</abbr></th>
+            <th><abbr title="">Tablas Blancas</abbr></th>
+            <th><abbr title="">Perdidas Blancas</abbr></th>
+            <th><abbr title="">Ganadas Negras</abbr></th>
+            <th><abbr title="">Tablas Negras</abbr></th>
+            <th><abbr title="">Perdidas Negras</abbr></th>
+          </tr>
+        </thead>
+        <tbody >
+            {% for d in data%}
+            <tr>
+                <th>{{ d.id }}</th>
+                <th>{{ d.win_w }}</th>
+                <th>{{ d.draw_w }}</th>
+                <th>{{ d.lose_w }}</th>
+                <th>{{ d.win_b }}</th>
+                <th>{{ d.draw_b }}</th>
+                <th>{{ d.lose_b }}</th>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table></div></div>
+    
+</div>
+{% endblock %}

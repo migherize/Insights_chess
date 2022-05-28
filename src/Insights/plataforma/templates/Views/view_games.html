@@ -1,0 +1,13 @@
+{% extends 'Views/Home.html' %}
+{% load static %}
+
+{% block title %}	Partidas	{% endblock %}
+
+{% block allgames %}
+{% for d in data%}
+<tr>
+    <th>{{ d.header.white }}</th>
+    <th>{{ d.header.black }}</th>
+</tr>
+{% endfor %}
+{% endblock %}

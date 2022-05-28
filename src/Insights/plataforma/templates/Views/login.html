@@ -1,42 +1,47 @@
 {% extends 'Views/base.html' %}
 {% load static %}
 
-{% block title %}	Login	{% endblock %}
+{% block title %} Login {% endblock %}
 
 {% block login %}
 <form method="post" class="box login-box">
   {% csrf_token %}
-    <figure class="image is-128x128" id="logo">
-        <img class="is-rounded" src="{% static 'img/lichess-titulo.png' %}"">
+  <figure class="image is-128x128" id="logo">
+    <img class="is-rounded" src="{% static 'img/lichess-titulo.png' %}"">
     </figure>
-  <div class="field">
+  <div class=" field">
     <label for="" class="label">Usuario</label>
     <div class="control has-icons-left">
-      <input type="text" name="username" placeholder="e.g. bobsmith@gmail.com" class="input" required>
+      <input type="text" name="username" placeholder="" class="input" required>
       <span class="icon is-small is-left">
-        <i class="fa fa-envelope"></i>
+        <i class="fa fa-user"></i>
       </span>
     </div>
-  </div>
-  <div class="field">
-    <label for="" class="label">Contraseña</label>
-    <div class="control has-icons-left">
-      <input type="password" name="password" placeholder="*******" class="input" required>
-      <span class="icon is-small is-left">
-        <i class="fa fa-lock"></i>
-      </span>
     </div>
-  </div>
-  <div class="field">
-    <label for="" class="checkbox">
-      <input type="checkbox">
-    Remember me
-    </label>
-  </div>
-  <div class="field">
-    <button class="button is-success">
-      Login
-    </button>
-  </div>
+    <div class="field">
+      <label for="" class="label">Contraseña</label>
+      <div class="control has-icons-left">
+        <input type="password" name="password" placeholder="*******" class="input" required>
+        <span class="icon is-small is-left">
+          <i class="fa fa-lock"></i>
+        </span>
+      </div>
+    </div>
+    <div class="field">
+      <label for="" class="checkbox">
+        <input type="checkbox">
+        Remember me
+      </label>
+    </div>
+    <div class="field">
+      <button class="button is-success">
+        <i class="fas fa-home"> Login</i>
+
+      </button>
 </form>
+<a href="{% url 'register' %} " class="button is-link" style="margin-bottom: 10px; float: right;">
+  <i class="fa fa-user"> Registrarme</i>
+</a>
+</div>
+
 {% endblock %}

@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 # Data Science
+
 class opening(models.Model):
     # ecos frecuencia high
     eco_ww = models.CharField(max_length=20, null=True, blank=True, default=None)
@@ -44,19 +45,14 @@ class Header(models.Model):
     result = models.CharField(max_length=20, null=True, blank=True, default=None)
     variant = models.CharField(max_length=20, null=True, blank=True, default=None)
     eco = models.CharField(max_length=20, null=True, blank=True, default=None)
-    opening = models.CharField(max_length=20, null=True, blank=True, default=None)
-    scienc = models.OneToOneField(DataAnalyst, related_name="scienc", on_delete=models.CASCADE)
+    opening = models.CharField(max_length=250, null=True, blank=True, default=None)
+    scienc = models.ForeignKey(DataAnalyst, related_name="partidas", null=True, blank=True, on_delete=models.CASCADE)
+
 
 class Moves(models.Model):
-    white = models.CharField(max_length=255, null=True, blank=True, default=None)
-    black = models.CharField(max_length=255, null=True, blank=True, default=None)
+    white = models.TextField(null=True, blank=True, default=None)
+    black = models.TextField(null=True, blank=True, default=None)
     result = models.CharField(max_length=20, null=True, blank=True, default=None)
-
-class Games(models.Model):
-    header_game = models.CharField(max_length=255, null=True, blank=True, default=None)
-    move_game = models.CharField(max_length=255, null=True, blank=True, default=None)
-    header = models.OneToOneField(Header, related_name="header", on_delete=models.CASCADE)
-    moves = models.OneToOneField(Moves, related_name="moves", on_delete=models.CASCADE)
 
 # Zona de Perfil
 class Perfil(models.Model):
@@ -89,7 +85,6 @@ class Perfil(models.Model):
     n_win = models.IntegerField(null=True, blank=True)
 
     username = models.OneToOneField('auth.User', related_name="nick", on_delete=models.CASCADE)
-    num_game = models.ForeignKey(Games, null=True, blank=True, on_delete=models.CASCADE)
     
     def __unicode__(self):
         return self.username
@@ -116,3 +111,9 @@ class Elo(models.Model):
     def __unicode__(self):
         return self.ranking
 
+class Games(models.Model):
+    header_game = models.TextField(null=True, blank=True, default=None)
+    move_game = models.TextField(null=True, blank=True, default=None)
+    header = models.OneToOneField(Header, related_name="header", on_delete=models.CASCADE)
+    moves = models.OneToOneField(Moves, related_name="moves", on_delete=models.CASCADE)
+    id_perfil = models.ForeignKey(Perfil, related_name="partidas", null=True, blank=True, on_delete=models.CASCADE)

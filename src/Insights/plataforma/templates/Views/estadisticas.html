@@ -1,0 +1,102 @@
+{% extends 'Views/Home.html' %}
+{% load static %}
+
+{% block title %}	Estadisticas	{% endblock %}
+
+{% block estadisticas %}
+<div class="card">
+  <div class="card-header"><p class="card-header-title">Tus mejores aperturas</p></div>
+  <div class="card-content"><div class="content">
+    <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+      <thead>
+        <tr>
+          <th><abbr title="">Color</abbr></th>
+          <th><abbr title="">Victorias</abbr></th>
+          <th><abbr title="">Tablas</abbr></th>
+          <th><abbr title="">Perdidas</abbr></th>
+        </tr>
+      </thead>
+      <tbody >
+          <tr>
+              <th>Blancas</th>
+              <th>{{ data.win_w }}</th>
+              <th>{{ data.draw_w }}</th>
+              <th>{{ data.lose_w }}</th>
+          </tr>
+          <tr>
+            <th>Negras</th>
+            <th>{{ data.win_b }}</th>
+            <th>{{ data.draw_b }}</th>
+            <th>{{ data.lose_b }}</th>
+        </tr>
+      </tbody>
+  </table></div></div>
+
+</div>
+<br />
+
+<div class="card">
+  <div class="card-header"><p class="card-header-title">Tus mejores aperturas</p></div>
+  <div class="card-content"><div class="content">
+    <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+      <thead>
+        <tr>
+          <th><abbr title="">Descripcion</abbr></th>
+          <th><abbr title="">Menu de Aperturas</abbr></th>
+          <th><abbr title="">Nombre de Aperturas</abbr></th>
+          <th><abbr title="">Numeros de Partidas</abbr></th>
+        </tr>
+      </thead>
+      <tbody >
+          <tr>
+              <th>Apertura Victorias con blancas</th>
+              <th>{{ data.opening.eco_ww }}</th>
+              <th>{{ data.opening.eco_ww }}</th>
+              <th>{{ data.opening.n_eco_ww }}</th>
+          </tr>
+          <tr>
+            <th>Apertura tablas con blancas</th>
+            <th>{{ data.opening.eco_dw }}</th>
+            <th>{{ data.opening.eco_dw }}</th>
+            <th>{{ data.opening.n_eco_dw }}</th>
+        </tr>
+        <tr>
+          <th>Apertura Perdidas con blancas</th>
+          <th>{{ data.opening.eco_lw }}</th>
+          <th>{{ data.opening.eco_lw }}</th>
+          <th>{{ data.opening.n_eco_lw }}</th>
+      </tr>
+      <tr>
+        <th>Apertura Victorias con Negras</th>
+        <th>{{ data.opening.eco_b }}</th>
+        <th>{{ data.opening.eco_b }}</th>
+        <th>{{ data.opening.n_eco_b }}</th>
+      </tr>
+      <tr>
+        <th>Apertura tablas con Negras</th>
+        <th>{{ data.opening.eco_db }}</th>
+        <th>{{ data.opening.eco_db }}</th>
+        <th>{{ data.opening.n_eco_db }}</th>
+      </tr>
+      <tr>
+        <th>Apertura Perdidas con Negras</th>
+        <th>{{ data.opening.eco_lb }}</th>
+        <th>{{ data.opening.eco_lb }}</th>
+        <th>{{ data.opening.n_eco_lb }}</th>
+      </tr>
+      </tbody>
+  </table></div></div>
+
+</div>
+
+
+<div class="card is-hidden1">
+    <div class="card-header"><p class="card-header-title">Menu de Aperturas</p></div>
+    <div class="card-content"><div class="content">Apertura Victorias con blancas {{ data.opening.eco_ww }}</div></div>
+    <div class="card-content"><div class="content">Apertura tablas con blancas {{ data.opening.eco_dw }}</div></div>
+    <div class="card-content"><div class="content">Apertura Perdidas con blancas {{ data.opening.eco_lw }}</div></div>
+    <div class="card-content"><div class="content">Apertura Victorias con Negras {{ data.opening.eco_b }}</div></div>
+    <div class="card-content"><div class="content">Apertura tablas con Negras {{ data.opening.eco_db }}</div></div>
+    <div class="card-content"><div class="content">Apertura Perdidas con Negras {{ data.opening.eco_lb }}</div></div>
+</div>
+{% endblock %}

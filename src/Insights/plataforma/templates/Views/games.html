@@ -4,5 +4,38 @@
 {% block title %}	Games	{% endblock %}
 
 {% block games %}
-<h1>hola</h1>
+<div class="card is-hidden1">
+  <div class="card-header"><p class="card-header-title">{{mensaje}}</p></div>
+  <div class="card-content">
+    <div class="columns is-desktop">
+      <div class="column">Introducir Partidas de manera Manual</div>
+      <div class="column">Traer Partidas de Lichess</div>
+    </div>
+    <div class="columns is-desktop">
+      <div class="column">    <div class="file is-info has-name">
+        <label class="file-label">
+          <input class="file-input" type="file" name="resume">
+          <span class="file-cta">
+            <span class="file-icon">
+              <i class="fas fa-upload"></i>
+            </span>
+            <span class="file-label">
+              IMPORTAR PARTIDA
+            </span>
+          </span>
+          <span class="file-name">
+            Screen Shot 2017-07-29 at 15.54.25.png
+          </span>
+        </label>
+      </div></div>
+      <div class="column">
+        <a class="button is-success is-medium is-fullwidth" href="{% url 'games' username=user.username %}">
+          <i class="fas fa-chess-knight" > Extraer Partidas de Lichess</i>
+          </a>
+      </div>
+    </div>
+
+    <div class="content"><button class="button is-success is-rounded">Enviar</button></div>
+  </div>
+</div>
 {% endblock %}

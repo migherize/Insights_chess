@@ -36,6 +36,7 @@ def clean_text(text, replace_commas_for_spaces=True):
     return text
 
 def split_dataframe(df,user):
+    user = user.lower()
     win_white = 0
     win_black = 0
     draw_white = 0
@@ -169,29 +170,41 @@ def split_color(game):
     list_black = []
     
     for g in game:
+        #print("-----------------")
+        #print("Nueva Partida",g)
         result = re.findall(exp_jugadas,g.strip())
         if result:
-            #print("result",result)
-            #tupla_color.append(result[0])
+            #print("par de jugadas",result)
+            tupla_color.append(result[0])
             tupla_par = []
+
             for r in result:
                 #print(r)
                 jugada = re.search(jugadas_white,r.strip())
                 if jugada:
                     num = re.search(r'^[0-9]+\.',r.strip())
                     if num:
-                        #print("move",r[num.end():jugada.end()].strip(),r[jugada.end():].strip())
                         white = r[num.end():jugada.end()].strip()
                         black = r[jugada.end():].strip()
                         moves = white,black
+                        #print("moves",moves)
+                        #print("white",white)
+                        #print("black",black)
                         tupla_par.append(moves)
                         moves_white.append(white)
                         moves_black.append(black)
-                        #moves_white.append(r[num.end():jugada.end()])
-                        #moves_black.append(r[jugada.end():])
+            
+            #print("moves",tupla_par)
+            #print("white",moves_white)
+            #print("black",moves_black)
+            
             tupla_color.append(tupla_par)
             list_white.append(moves_white)
             list_black.append(moves_black)
+            tupla_par = []
+            moves_white = []
+            moves_black = []
+
         else:
             print("no entro",g.strip())
             #print("list_white",len(list_white))
