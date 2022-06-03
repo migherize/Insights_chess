@@ -4,10 +4,34 @@
 {% block title %}	Partidas	{% endblock %}
 
 {% block allgames %}
-{% for d in data%}
-<tr>
-    <th>{{ d.header.white }}</th>
-    <th>{{ d.header.black }}</th>
-</tr>
-{% endfor %}
+<div class="card">
+  <div class="card-header"><p class="card-header-title">Tus mejores aperturas</p></div>
+  <div class="card-content"><div class="content">
+    <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+      <thead>
+        <tr>
+          <th><abbr title="">Color</abbr></th>
+          <th><abbr title="">Victorias</abbr></th>
+          <th><abbr title="">Tablas</abbr></th>
+          <th><abbr title="">Perdidas</abbr></th>
+        </tr>
+      </thead>
+      <tbody >
+          <tr>
+              <th>Blancas</th>
+              <th>{{ data.win_w }}</th>
+              <th>{{ data.draw_w }}</th>
+              <th>{{ data.lose_w }}</th>
+          </tr>
+          <tr>
+            <th>Negras</th>
+            <th>{{ data.win_b }}</th>
+            <th>{{ data.draw_b }}</th>
+            <th>{{ data.lose_b }}</th>
+        </tr>
+      </tbody>
+  </table></div></div>
+
+</div>
+<br />
 {% endblock %}

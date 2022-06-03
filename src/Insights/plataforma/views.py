@@ -96,15 +96,15 @@ def register_lichess(request):
                     perfil = Perfil.objects.create(
                         url=url_nick, rated=dict_count['rated'], n_draw=dict_count['draw'], n_loss=dict_count['loss'], n_win=dict_count['win'], username=user)
                     Foto.objects.create(
-                        ruta='../static/img/user.jpg', picture=perfil)
+                        ruta='../static/img/user.jpg', perfil=perfil)
                     Elo.objects.create(name=list_blitz[0], games=int(list_blitz[1]), rating=int(
-                        list_blitz[2]), rd=int(list_blitz[3]), prog=int(list_blitz[4]), ranking=perfil)
+                        list_blitz[2]), rd=int(list_blitz[3]), prog=int(list_blitz[4]), perfil=perfil)
                     Elo.objects.create(name=list_bullet[0], games=int(list_bullet[1]), rating=int(
-                        list_bullet[2]), rd=int(list_bullet[3]), prog=int(list_bullet[4]), ranking=perfil)
+                        list_bullet[2]), rd=int(list_bullet[3]), prog=int(list_bullet[4]), perfil=perfil)
                     Elo.objects.create(name=list_rapid[0], games=int(list_rapid[1]), rating=int(
-                        list_rapid[2]), rd=int(list_rapid[3]), prog=int(list_rapid[4]), ranking=perfil)
+                        list_rapid[2]), rd=int(list_rapid[3]), prog=int(list_rapid[4]), perfil=perfil)
                     Elo.objects.create(name=list_classical[0], games=int(list_classical[1]), rating=int(
-                        list_classical[2]), rd=int(list_classical[3]), prog=int(list_classical[4]), ranking=perfil)
+                        list_classical[2]), rd=int(list_classical[3]), prog=int(list_classical[4]), perfil=perfil)
                     
                     print("Usuario registrado desde lichess")
                     return render(request, 'Views/login.html', {})
@@ -181,12 +181,20 @@ def games(request, username):
     user = User.objects.get(username=username)
     print("usuario", user)
     print("usuario", user.nick)
-    print("rated", user.nick.rated)
+    print("rated", user.nick.id)
 
     df = pd.DataFrame(list(zip(list_white, list_black, list_result, list_ECO, list_Opening)), columns=[
                       'Blancas', 'Negras', 'Result', 'ECO', 'Opening'])
     codigo_white_win, num_white_win, codigo_black_win, num_black_win, codigo_white_draw, num_white_draw, codigo_black_draw, num_black_draw, codigo_white_lose, num_white_lose, codigo_black_lose, num_black_lose, win_white, draw_white, lose_white, win_black, draw_black, lose_black = split_dataframe(
         df, str(username))
+
+    science = DataAnalyst.objects.create(games=len(list_game), 
+                                        win_w=win_white, 
+                                        draw_w=draw_white,
+                                        lose_w=lose_white, 
+                                        win_b=win_black, 
+                                        draw_b=draw_black, 
+                                        lose_b=lose_black)
 
     apertura = opening.objects.create(eco_ww=codigo_white_win,
                                       eco_dw=codigo_white_draw,
@@ -199,20 +207,13 @@ def games(request, username):
                                       n_eco_lw=num_white_lose, 
                                       n_eco_b=num_black_win, 
                                       n_eco_db=num_black_draw, 
-                                      n_eco_lb=num_black_lose)
+                                      n_eco_lb=num_black_lose,
+                                      data=science)
 
-    science = DataAnalyst.objects.create(games=len(list_game), 
-                                        win_w=win_white, 
-                                        draw_w=draw_white,
-                                        lose_w=lose_white, 
-                                        win_b=win_black, 
-                                        draw_b=draw_black, 
-                                        lose_b=lose_black, 
-                                        opening=apertura)
     for i in range(0,10):
-        titulos = Header.objects.create(event='1',site='2',date='3',white = list_white[i], elo_w= '4',elo_b='6', black = list_black[i] ,result = list_result[i],variant='8', eco = list_ECO[i], opening=list_Opening[i], scienc_id=science.id)
-        movimientos = Moves.objects.create(white = mov_white[i], black = mov_black[i])
-        Games.objects.create(header_game = list_info[i], move_game = list_game[i], header = titulos, moves = movimientos, id_perfil=user.nick)
+        game = Games.objects.create(header_game = list_info[i], move_game = list_game[i], perfil_id = user.nick.id)
+        titulos = Header.objects.create(event='1',site='2',date='3',white = list_white[i], elo_w= '4',elo_b='6', black = list_black[i] ,result = list_result[i],variant='8', eco = list_ECO[i], opening=list_Opening[i], game_id=game.id, scienc_id = science.id)
+        movimientos = Moves.objects.create(white = mov_white[i], black = mov_black[i],game_id=game.id)
 
     #partidas = user.nick.partidas.header_id.partidas.all()
     scienc = user.nick.partidas.first().header.scienc_id
@@ -238,7 +239,8 @@ def view_games(request, username):
             elo = user.nick.rankings.all()
             scienc = user.nick.partidas.first().header.scienc_id
             data = DataAnalyst.objects.get(id=int(scienc))
-            return render(request, 'Views/games.html', {'elo': elo , 'data': data})
+            print("enviar")
+            return render(request, 'Views/view_games.html', {'elo': elo , 'data': data})
         
         else:
             mensaje = "No hay partidas"
@@ -261,6 +263,9 @@ def insight(request, username):
     data = DataAnalyst.objects.all()
     print("data",data)
     print("data",data[0].win_w)
+    #busqueda = DataAnalyst.objects.filter(opening = 67)
+    #print("busqueda",busqueda)
+
     #data = opening.objects.get(id=int(aperturas.opening))
     return render(request, 'Views/estilo.html', {'elo': elo , 'data': data})
 

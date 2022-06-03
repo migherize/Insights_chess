@@ -4,55 +4,6 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-# Data Science
-
-class opening(models.Model):
-    # ecos frecuencia high
-    eco_ww = models.CharField(max_length=20, null=True, blank=True, default=None)
-    eco_dw = models.CharField(max_length=20, null=True, blank=True, default=None)
-    eco_lw = models.CharField(max_length=20, null=True, blank=True, default=None)
-    eco_b = models.CharField(max_length=20, null=True, blank=True, default=None)
-    eco_db = models.CharField(max_length=20, null=True, blank=True, default=None)
-    eco_lb = models.CharField(max_length=20, null=True, blank=True, default=None)
-    # ecos frecuencia high
-    n_eco_ww = models.IntegerField()
-    n_eco_dw = models.IntegerField()
-    n_eco_lw = models.IntegerField()
-    n_eco_b = models.IntegerField()
-    n_eco_db = models.IntegerField()
-    n_eco_lb = models.IntegerField()
-
-class DataAnalyst(models.Model):
-    games = models.CharField(max_length=20, null=True, blank=True, default=None)
-    # cantidad
-    win_w = models.IntegerField()
-    draw_w = models.IntegerField()
-    lose_w = models.IntegerField()
-    win_b = models.IntegerField()
-    draw_b = models.IntegerField()
-    lose_b = models.IntegerField()
-
-    opening = models.OneToOneField(opening, related_name="opening", on_delete=models.CASCADE)
-
-class Header(models.Model):
-    event = models.CharField(max_length=20, null=True, blank=True, default=None)
-    site = models.CharField(max_length=20, null=True, blank=True, default=None)
-    date = models.CharField(max_length=20, null=True, blank=True, default=None)
-    white = models.CharField(max_length=20, null=True, blank=True, default=None)
-    elo_w = models.CharField(max_length=20, null=True, blank=True, default=None)
-    elo_b = models.CharField(max_length=20, null=True, blank=True, default=None)
-    black = models.CharField(max_length=20, null=True, blank=True, default=None)
-    result = models.CharField(max_length=20, null=True, blank=True, default=None)
-    variant = models.CharField(max_length=20, null=True, blank=True, default=None)
-    eco = models.CharField(max_length=20, null=True, blank=True, default=None)
-    opening = models.CharField(max_length=250, null=True, blank=True, default=None)
-    scienc = models.ForeignKey(DataAnalyst, related_name="partidas", null=True, blank=True, on_delete=models.CASCADE)
-
-
-class Moves(models.Model):
-    white = models.TextField(null=True, blank=True, default=None)
-    black = models.TextField(null=True, blank=True, default=None)
-    result = models.CharField(max_length=20, null=True, blank=True, default=None)
 
 # Zona de Perfil
 class Perfil(models.Model):
@@ -94,7 +45,7 @@ class Foto(models.Model):
     ruta = models.ImageField(
         upload_to ='../imagenes/Profiles/', height_field=None, width_field=None, max_length=100)
     
-    picture =models.OneToOneField(Perfil, related_name="picture", null=True, blank=True, on_delete=models.CASCADE)
+    perfil = models.OneToOneField(Perfil, related_name="perfil", null=True, blank=True, on_delete=models.CASCADE)
     
     def __unicode__(self):
         return self.picture
@@ -106,7 +57,7 @@ class Elo(models.Model):
     rd = models.IntegerField()
     prog = models.IntegerField()
     
-    ranking = models.ForeignKey(Perfil, related_name="rankings", null=True, blank=True, on_delete=models.CASCADE)
+    perfil = models.ForeignKey(Perfil, related_name="rankings", null=True, blank=True, on_delete=models.CASCADE)
     
     def __unicode__(self):
         return self.ranking
@@ -114,6 +65,60 @@ class Elo(models.Model):
 class Games(models.Model):
     header_game = models.TextField(null=True, blank=True, default=None)
     move_game = models.TextField(null=True, blank=True, default=None)
-    header = models.OneToOneField(Header, related_name="header", on_delete=models.CASCADE)
-    moves = models.OneToOneField(Moves, related_name="moves", on_delete=models.CASCADE)
-    id_perfil = models.ForeignKey(Perfil, related_name="partidas", null=True, blank=True, on_delete=models.CASCADE)
+    perfil = models.ForeignKey(Perfil, related_name="partidas", null=True, blank=True, on_delete=models.CASCADE)
+
+    def __unicode__(self):
+        return self.id_perfil
+
+# Data Science
+
+class DataAnalyst(models.Model):
+    games = models.CharField(max_length=20, null=True, blank=True, default=None)
+    # cantidad
+    win_w = models.IntegerField()
+    draw_w = models.IntegerField()
+    lose_w = models.IntegerField()
+    win_b = models.IntegerField()
+    draw_b = models.IntegerField()
+    lose_b = models.IntegerField()
+
+class opening(models.Model):
+    # ecos frecuencia high
+    eco_ww = models.CharField(max_length=20, null=True, blank=True, default=None)
+    eco_dw = models.CharField(max_length=20, null=True, blank=True, default=None)
+    eco_lw = models.CharField(max_length=20, null=True, blank=True, default=None)
+    eco_b = models.CharField(max_length=20, null=True, blank=True, default=None)
+    eco_db = models.CharField(max_length=20, null=True, blank=True, default=None)
+    eco_lb = models.CharField(max_length=20, null=True, blank=True, default=None)
+    # ecos frecuencia high
+    n_eco_ww = models.IntegerField()
+    n_eco_dw = models.IntegerField()
+    n_eco_lw = models.IntegerField()
+    n_eco_b = models.IntegerField()
+    n_eco_db = models.IntegerField()
+    n_eco_lb = models.IntegerField()
+
+    data = models.OneToOneField(DataAnalyst, related_name="data_ciencia", on_delete=models.CASCADE)
+
+class Header(models.Model):
+    event = models.CharField(max_length=20, null=True, blank=True, default=None)
+    site = models.CharField(max_length=20, null=True, blank=True, default=None)
+    date = models.CharField(max_length=20, null=True, blank=True, default=None)
+    white = models.CharField(max_length=20, null=True, blank=True, default=None)
+    elo_w = models.CharField(max_length=20, null=True, blank=True, default=None)
+    elo_b = models.CharField(max_length=20, null=True, blank=True, default=None)
+    black = models.CharField(max_length=20, null=True, blank=True, default=None)
+    result = models.CharField(max_length=20, null=True, blank=True, default=None)
+    variant = models.CharField(max_length=20, null=True, blank=True, default=None)
+    eco = models.CharField(max_length=20, null=True, blank=True, default=None)
+    opening = models.CharField(max_length=250, null=True, blank=True, default=None)
+    
+    game = models.OneToOneField(Games, related_name="header", on_delete=models.CASCADE)
+    scienc = models.ForeignKey(DataAnalyst, related_name="data_analisis", null=True, blank=True, on_delete=models.CASCADE)
+
+
+class Moves(models.Model):
+    white = models.TextField(null=True, blank=True, default=None)
+    black = models.TextField(null=True, blank=True, default=None)
+    result = models.CharField(max_length=20, null=True, blank=True, default=None)
+    game = models.OneToOneField(Games, related_name="moves", on_delete=models.CASCADE)
