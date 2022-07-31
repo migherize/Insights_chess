@@ -13,6 +13,7 @@ def main():
 
     path_document = '../output' 
     document_name = 'Cluster.csv'
+    corte_t = 0.06
 
     try:
         
@@ -43,7 +44,7 @@ def main():
 
         dividing_line = True
         try:
-            see_graph(dataframe, dividing_line, NORMALIZE, dataframe_normalize)
+            see_graph(dataframe, dividing_line, NORMALIZE, dataframe_normalize,corte_t)
             pass
         except Exception as e:
             print(e)
@@ -90,8 +91,7 @@ def clean_dataframe(df):
 #__________________________________________________________________
 # Grafica del dataframe
 
-def see_graph(df, dividing_line, NORMALIZE, df_normalize):
-    
+def see_graph(df, dividing_line, NORMALIZE, df_normalize,corte_t):
     if NORMALIZE:
         data_escaled = pd.DataFrame(df_normalize, columns=df.columns)
         info = 'con data normalizada'
@@ -99,17 +99,25 @@ def see_graph(df, dividing_line, NORMALIZE, df_normalize):
         data_escaled = df
         info = 'sin data normalizada'
 
+    Clustering_Jeraruico = shc.linkage(data_escaled,method="ward")
+
     if dividing_line:
         plt.figure(figsize=(14,7))
         plt.title(f"Dendograma {info}".strip())
-        dend = shc.dendrogram(shc.linkage(data_escaled,method="ward"))
+        dend = shc.dendrogram(Clustering_Jeraruico)
+        clusters = shc.fcluster(Clustering_Jeraruico, t=corte_t, criterion='distance')
+        print("clusters",clusters)
+        max_value = max(clusters)
+        print("max_value",max_value)
         plt.axhline(y=20000,color='r',linestyle='--')
         plt.show()
         return
-        
+
     plt.figure(figsize=(10,5))
     plt.title("Dendrograms")
-    dend = shc.dendrogram(shc.linkage(data_escaled,method="ward"))
+    dend = shc.dendrogram(Clustering_Jeraruico)
+    clusters = shc.fcluster(Clustering_Jeraruico, t=3, criterion='distance')
+    print("clusters",clusters)
     plt.show()
 
 #__________________________________________________________________

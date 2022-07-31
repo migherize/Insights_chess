@@ -5,7 +5,7 @@
 
 {% block insight %}
 <div class="card">
-    <div class="card-header"><p class="card-header-title">Total de Partidas Jugadas: {{ data.games }}</p></div>
+    <div class="card-header"><p class="card-header-title">Cantidad de Usarios: {{ len_user }}</p></div>
     <div class="card-content"><div class="content">
       <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
         <thead>
@@ -20,9 +20,10 @@
           </tr>
         </thead>
         <tbody >
-            {% for d in data%}
+
+            {% for d in list_result%}
             <tr>
-                <th>{{ d.id }}</th>
+                <th>{{ d.user }}</th>
                 <th>{{ d.win_w }}</th>
                 <th>{{ d.draw_w }}</th>
                 <th>{{ d.lose_w }}</th>

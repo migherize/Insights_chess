@@ -12,30 +12,33 @@
       <div class="column">Traer Partidas de Lichess</div>
     </div>
     <div class="columns is-desktop">
-      <div class="column">    <div class="file is-info has-name">
-        <label class="file-label">
-          <input class="file-input" type="file" name="resume">
-          <span class="file-cta">
-            <span class="file-icon">
-              <i class="fas fa-upload"></i>
-            </span>
-            <span class="file-label">
-              IMPORTAR PARTIDA
-            </span>
-          </span>
-          <span class="file-name">
-            Screen Shot 2017-07-29 at 15.54.25.png
-          </span>
-        </label>
-      </div></div>
+      <div class="column">    
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="file">
+            <label class="file-label">
+              <input class="file-input" type="file" name="title">
+              <span class="file-cta">
+                <span class="file-icon">
+                  <i class="fas fa-upload"></i>
+                </span>
+                <span class="file-label">
+                  Choose a file…
+                </span>
+              </span>
+            </label>
+          </div>
+          <div class="content"><button class="button is-success is-rounded" type="submit">Upload File</button></div>
+        </form>
+      </div>
       <div class="column">
-        <a class="button is-success is-medium is-fullwidth" href="{% url 'games' username=user.username %}">
+        <a class="button is-success is-medium is-fullwidth" onclick="alert('Cargando')" href="{% url 'games' username=user.username %}">
           <i class="fas fa-chess-knight" > Extraer Partidas de Lichess</i>
           </a>
+          <p class="help is-danger">{{message}}</p>
       </div>
     </div>
 
-    <div class="content"><button class="button is-success is-rounded">Enviar</button></div>
   </div>
 </div>
 {% endblock %}

@@ -26,6 +26,13 @@
           <i class="fa fa-lock"></i>
         </span>
       </div>
+      {% if message %}
+          {% if color %}
+          <p class="help is-success">{{message}}</p>
+          {% else %}
+          <p class="help is-danger">{{message}}</p>
+          {% endif %} 
+      {% endif %} 
     </div>
     <div class="field">
       <label for="" class="checkbox">

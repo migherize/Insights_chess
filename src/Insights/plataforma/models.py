@@ -28,6 +28,7 @@ class Perfil(models.Model):
     firstName = models.CharField(max_length=20, null=True, blank=True, default=None)
     lastName = models.CharField(max_length=20, null=True, blank=True, default=None)
     rating = models.IntegerField(null=True, blank=True)
+    kind = models.IntegerField(null=True, blank=True)
     
     #Historial
     rated = models.IntegerField(null=True, blank=True)

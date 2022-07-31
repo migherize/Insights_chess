@@ -15,13 +15,19 @@ def account(user):
     return nick
 
 def all_games(user):
-    complement = '/games/user/{}?tags=true&clocks=false&evals=false&opening=true'.format(str(user).lower)
-    print("complement",complement)
+    complement = '/games/user/{}?tags=true&clocks=false&evals=false&opening=true'.format(user)
+    print("request",base_url+complement)
     nick = requests.get(base_url+complement,headers=cabeceras)
     print(nick.status_code)
-    print("----------------")
-    with open(os.path.join(split_path,('{}.pgn'.format(user))), 'w') as f:
-        f.writelines(nick.text)
+    if nick.status_code == 401:
+        complement = '/games/user/{}?tags=true&clocks=false&evals=false&opening=true'.format(str(user).lower)
+        print("complement 2",complement)
+        nick = requests.get(base_url+complement,headers=cabeceras)
+        print(nick.status_code)
+    print(len(nick.text),"----------------")
+    if len(nick.text) != 0:
+        with open(os.path.join(split_path,('{}.pgn'.format(user))), 'w') as f:
+            f.writelines(nick.text)
     return nick
 
 def select_png(user):
@@ -36,4 +42,5 @@ def select_png(user):
     
     return 0
 
-#account()
+#account("Reifer")
+#all_games("Reifer")
