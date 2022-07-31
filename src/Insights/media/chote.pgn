@@ -1,0 +1,295 @@
+[Event "Casual Classical game"]
+[Site "https://lichess.org/HKMOA5Dc"]
+[Date "2020.02.26"]
+[White "Chote"]
+[Black "Anonymous"]
+[Result "1-0"]
+[UTCDate "2020.02.26"]
+[UTCTime "18:14:08"]
+[WhiteElo "1226"]
+[BlackElo "?"]
+[Variant "Standard"]
+[TimeControl "7200+120"]
+[ECO "A45"]
+[Opening "Queen's Pawn Game: Chigorin Variation"]
+[Termination "Normal"]
+
+1. d4 d5 2. Nc3 Nf6 3. e3 Bf5 4. Bb5+ c6 5. Bd3 Bxd3 6. cxd3 Nbd7 7. e4 dxe4 8. dxe4 e5 9. dxe5 Nxe5 10. Qxd8+ Rxd8 11. Nf3 Nd3+ 12. Ke2 Nxc1+ 13. Raxc1 Bd6 14. e5 Bxe5 15. Nxe5 O-O 16. Rhd1 g6 17. Rd2 Rfe8 18. Rcd1 Rxd2+ 19. Rxd2 Rxe5+ 20. Kd3 Rd5+ 21. Nxd5 cxd5 22. Kd4 b5 23. Rc2 a5 24. Rc8+ Kg7 25. Ra8 a4 26. Kc5 d4 27. Kxd4 Nd7 28. Ra7 Nb6 29. Kc5 Nc8 30. Ra5 Kf6 31. Kxb5 h5 32. Kxa4 Nd6 33. b4 Nf5 34. b5 Kg5 35. b6 Kf4 36. g3+ Kf3 37. b7 Kxf2 38. b8=Q g5 39. Rxf5+ Kg2 40. Rxg5 Kxh2 41. Rxh5+ Kg2 42. Qf8 f5 43. Rxf5 Kh2 44. g4 Kh3 45. g5 Kg4 46. g6 Kh4 47. g7 Kh3 48. g8=Q Kh2 49. Rh5# 1-0
+
+
+[Event "Casual Classical game"]
+[Site "https://lichess.org/u3nON33y"]
+[Date "2020.02.12"]
+[White "Chote"]
+[Black "Adiktet"]
+[Result "1-0"]
+[UTCDate "2020.02.12"]
+[UTCTime "21:42:05"]
+[WhiteElo "1226"]
+[BlackElo "1304"]
+[Variant "Standard"]
+[TimeControl "900+15"]
+[ECO "A45"]
+[Opening "Queen's Pawn Game: Chigorin Variation"]
+[Termination "Normal"]
+
+1. d4 d5 2. Nc3 Nf6 3. Nf3 e6 4. e3 Nc6 5. Bd3 Bd6 6. e4 dxe4 7. Nxe4 Nxe4 8. Bxe4 e5 9. dxe5 Bxe5 10. Qxd8+ Kxd8 11. Bg5+ f6 12. Rd1+ Bd7 13. Nxe5 fxg5 14. Nf7+ Ke7 15. Nxh8 Rxh8 16. O-O Rd8 17. Bxh7 Be6 18. Bd3 Ne5 19. Rfe1 Kf6 20. Re3 Nxd3 21. cxd3 Rd4 22. Rde1 Bg4 23. f3 Bf5 24. g4 Bxd3 25. Re6+ Kf7 26. Re7+ Kf6 27. Rxc7 Ba6 28. Rce7 Bc4 29. Rxb7 Bxa2 30. Rxa7 Bd5 31. Ra8 Bxf3 32. Rf8+ Kg6 33. Rxf3 Rxg4+ 34. Kf2 Kh5 35. h3 Rh4 36. Kg3 g6 37. Re8 Kh6 38. b3 Kg7 39. Re7+ Kg8 40. Rff7 Rb4 41. Rg7+ Kf8 42. Ref7+ Ke8 43. Rb7 Rd4 44. b4 Rd3+ 45. Kg4 Rd5 46. Rge7+ Kd8 47. b5 Rf5 48. b6 Rf4+ 49. Kxg5 Rb4 50. Kxg6 Kc8 51. Rbc7+ Kb8 52. b7 Rb6+ 53. Kf7 Rh6 54. Ke8 Rxh3 55. Red7 Rh8+ 56. Ke7 Rg8 57. Kd6 Re8 58. Re7 Rd8+ 59. Red7 Re8 60. Rc8+ Rxc8 61. bxc8=Q+ Kxc8 62. Rc7+ Kd8 63. Ra7 Ke8 64. Rb7 Kf8 65. Ke6 Kg8 66. Kf6 Kh8 67. Kg6 Kg8 68. Rb8# 1-0
+
+
+[Event "Casual Classical game"]
+[Site "https://lichess.org/q5USkbd7"]
+[Date "2020.02.09"]
+[White "Adiktet"]
+[Black "Chote"]
+[Result "1-0"]
+[UTCDate "2020.02.09"]
+[UTCTime "14:52:00"]
+[WhiteElo "1291"]
+[BlackElo "1226"]
+[Variant "Standard"]
+[TimeControl "900+15"]
+[ECO "C50"]
+[Opening "Italian Game"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bc4 d6 4. d4 Be6 5. Bxe6 fxe6 6. dxe5 dxe5 7. Qxd8+ Rxd8 8. Bg5 Nf6 9. Nc3 h6 10. Be3 Ng4 11. Bxa7 Nxa7 12. O-O Bc5 13. Rad1 Bxf2+ 14. Kh1 Ne3 15. Rxd8+ Kxd8 16. Rxf2 Nxc2 17. Rxc2 Ke7 18. Nxe5 Rf8 19. Ng6+ Kf7 20. Nxf8 Kxf8 21. e5 Nc6 22. Rf2+ Ke8 23. Nb5 Nxe5 24. Nxc7+ Kd7 25. Nb5 Nd3 26. Rf7+ Ke8 27. Nd6+ Kd8 28. Nxb7+ Ke8 29. Rxg7 Nf2+ 30. Kg1 Nd3 31. Kf1 Nxb2 32. Ke2 e5 33. Ke3 Nc4+ 34. Ke4 Kf8 35. Rc7 Nd2+ 36. Kxe5 Nf1 37. Kf6 Ne3 38. Rc8# 1-0
+
+
+[Event "Casual Classical game"]
+[Site "https://lichess.org/nY8S40di"]
+[Date "2020.02.06"]
+[White "Adiktet"]
+[Black "Chote"]
+[Result "1-0"]
+[UTCDate "2020.02.06"]
+[UTCTime "22:09:20"]
+[WhiteElo "1301"]
+[BlackElo "1226"]
+[Variant "Standard"]
+[TimeControl "900+15"]
+[ECO "B00"]
+[Opening "Nimzowitsch Defense: Kennedy Variation, Linksspringer Variation"]
+[Termination "Normal"]
+
+1. e4 Nc6 2. d4 e5 3. d5 Bb4+ 4. c3 Bc5 5. dxc6 bxc6 6. Nf3 d5 7. exd5 cxd5 8. Nxe5 Qf6 9. Be3 Qxe5 10. Bb5+ Bd7 11. Bxd7+ Kxd7 12. Qg4+ f5 13. Qa4+ c6 14. Nd2 Nf6 15. O-O-O Rab8 16. Bxc5 Rb7 17. Rhe1 Ne4 18. Nxe4 Rhb8 19. b4 Qxh2 20. Nf6+ gxf6 21. Re7+ Kd8 22. Rxb7 Rxb7 23. Qxc6 Qf4+ 24. Kb1 Qc7 25. Rxd5+ Qd7 26. Rxd7+ Rxd7 27. Qa8+ Kc7 28. Qxa7+ Kc6 29. Qb6+ Kd5 30. Kc2 Rg7 31. Qd6+ Ke4 32. Qd4# 1-0
+
+
+[Event "Rated Classical game"]
+[Site "https://lichess.org/qlJyTtT5"]
+[Date "2020.02.04"]
+[White "ManiWaWa"]
+[Black "Chote"]
+[Result "1-0"]
+[UTCDate "2020.02.04"]
+[UTCTime "08:54:04"]
+[WhiteElo "1394"]
+[BlackElo "1322"]
+[WhiteRatingDiff "+4"]
+[BlackRatingDiff "-96"]
+[Variant "Standard"]
+[TimeControl "900+15"]
+[ECO "C48"]
+[Opening "Four Knights Game: Spanish Variation"]
+[Termination "Normal"]
+
+1. e4 Nc6 2. Nc3 e5 3. Nf3 Nf6 4. Bb5 a6 5. Qe2 d6 6. O-O Bd7 7. Bc4 g6 8. Ng5 d5 9. Bxd5 Bg4 10. Nxf7 Bxe2 11. Nxd8 Bxf1 12. Nf7 Rg8 13. Kxf1 Ne7 14. Bxb7 Rb8 15. Bxa6 Kxf7 16. Bc4+ Ke8 17. d3 Rb6 18. Rb1 h6 19. b3 Nc6 20. a4 Nb4 21. Rb2 Ng4 22. Bxg8 Nxh2+ 23. Kg1 Ng4 24. Nd5 1-0
+
+
+[Event "Casual Classical game"]
+[Site "https://lichess.org/YwgK4IG8"]
+[Date "2020.02.04"]
+[White "Adiktet"]
+[Black "Chote"]
+[Result "1-0"]
+[UTCDate "2020.02.04"]
+[UTCTime "00:52:27"]
+[WhiteElo "1270"]
+[BlackElo "1322"]
+[Variant "Standard"]
+[TimeControl "900+15"]
+[ECO "B00"]
+[Opening "Nimzowitsch Defense"]
+[Termination "Normal"]
+
+1. e4 Nc6 2. d4 Nf6 3. e5 Nd5 4. Bc4 e6 5. Nc3 f6 6. Nxd5 Bb4+ 7. c3 exd5 8. Bxd5 Be7 9. exf6 gxf6 10. Nf3 Rg8 11. Bxg8 d5 12. Bf4 Bd6 13. Qe2+ Ne7 14. g3 Kf8 15. Be6 c6 16. Bxc8 Qxc8 17. Bxd6 Qh3 18. Qxe7+ Kg8 19. Qxf6 Qg2 20. Rf1 Re8+ 21. Be5 Rf8 22. Qg7# 1-0
+
+
+[Event "Rated Classical game"]
+[Site "https://lichess.org/VIIC7wXW"]
+[Date "2020.02.02"]
+[White "AyazMemon"]
+[Black "Chote"]
+[Result "1-0"]
+[UTCDate "2020.02.02"]
+[UTCTime "23:12:53"]
+[WhiteElo "1494"]
+[BlackElo "1500"]
+[WhiteRatingDiff "+10"]
+[BlackRatingDiff "-178"]
+[Variant "Standard"]
+[TimeControl "900+15"]
+[ECO "C55"]
+[Opening "Italian Game: Scotch Gambit Declined"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nf6 3. Bc4 Nc6 4. d4 d6 5. Nc3 a6 6. Bg5 b5 7. Bd5 Bd7 8. dxe5 dxe5 9. Nxe5 Bg4 10. Bxc6+ Ke7 11. Nxg4 Qxd1+ 12. Nxd1 h6 13. Bxa8 hxg5 14. Nxf6 Kxf6 15. O-O Bc5 16. Bd5 Bd6 17. g3 Rc8 18. Re1 c6 19. Bb3 c5 20. c4 Be5 21. f4 Bd4+ 22. Kg2 a5 23. cxb5 c4 24. e5+ Ke7 25. Re4 cxb3 26. Rxd4 Rc2+ 27. Kf3 a4 28. axb3 Rxh2 29. bxa4 1-0
+
+
+[Event "Casual Chess960 game"]
+[Site "https://lichess.org/02fVpOBR"]
+[Date "2020.02.02"]
+[White "lichess AI level 1"]
+[Black "Chote"]
+[Result "1-0"]
+[UTCDate "2020.02.02"]
+[UTCTime "09:53:32"]
+[WhiteElo "?"]
+[BlackElo "1500"]
+[Variant "Chess960"]
+[TimeControl "600+0"]
+[ECO "?"]
+[Opening "?"]
+[Termination "Normal"]
+[FEN "nnrkbbqr/pppppppp/8/8/8/8/PPPPPPPP/NNRKBBQR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Nb3 f6 2. f4 e5 3. e4 Bh5+ 4. g4 Bg6 5. d3 Na6 6. fxe5 Bc5 7. Nxc5 Nxc5 8. Qxc5 Qxa2 9. Bb4 Qxb2 10. Qe7# 1-0
+
+
+[Event "Casual Three-check game"]
+[Site "https://lichess.org/nIJ55Wqc"]
+[Date "2020.02.02"]
+[White "Chote"]
+[Black "lichess AI level 1"]
+[Result "0-1"]
+[UTCDate "2020.02.02"]
+[UTCTime "09:53:18"]
+[WhiteElo "1500"]
+[BlackElo "?"]
+[Variant "Three-check"]
+[TimeControl "600+0"]
+[ECO "A40"]
+[Opening "Horwitz Defense"]
+[Termination "Normal"]
+
+1. d4 e6 2. Nf3 Bb4+ 3. c3 Bd6 4. Bg5 f6 5. Bh4 g5 6. Bg3 Nc6 7. e3 Be7 8. Bd3 Nb4 9. cxb4 Bxb4+ 10. Nbd2 Bxd2+ 0-1
+
+
+[Event "Casual Antichess game"]
+[Site "https://lichess.org/NzeWHR9d"]
+[Date "2020.02.02"]
+[White "Chote"]
+[Black "lichess AI level 1"]
+[Result "1-0"]
+[UTCDate "2020.02.02"]
+[UTCTime "09:46:03"]
+[WhiteElo "1500"]
+[BlackElo "?"]
+[Variant "Antichess"]
+[TimeControl "600+0"]
+[ECO "?"]
+[Opening "?"]
+[Termination "Normal"]
+
+1. d4 Nh6 2. Bxh6 gxh6 3. e4 a6 4. Bxa6 bxa6 5. Na3 Ra7 6. Nb5 axb5 7. Rc1 Rxa2 8. Nh3 Rxb2 9. Kd2 Rxc2 10. Kxc2 h5 11. Qxh5 e6 12. Qxh7 Rxh7 13. g4 Rxh3 14. Rhd1 Rxh2 15. Ra1 Rxf2 16. Rd2 Rxd2 17. Kxd2 Ba3 18. Rxa3 Na6 19. Rxa6 Bxa6 20. g5 Qxg5 21. Ke3 Qxe3 22. e5 Qxe5 23. dxe5 b4# 1-0
+
+
+[Event "Casual Horde game"]
+[Site "https://lichess.org/Sv1d60NA"]
+[Date "2020.02.02"]
+[White "Chote"]
+[Black "lichess AI level 1"]
+[Result "1-0"]
+[UTCDate "2020.02.02"]
+[UTCTime "00:11:32"]
+[WhiteElo "1500"]
+[BlackElo "?"]
+[Variant "Horde"]
+[TimeControl "600+0"]
+[ECO "?"]
+[Opening "?"]
+[Termination "Normal"]
+[FEN "rnbqkbnr/pppppppp/8/1PP2PP1/PPPPPPPP/PPPPPPPP/PPPPPPPP/PPPPPPPP w kq - 0 1"]
+[SetUp "1"]
+
+1. a5 e6 2. fxe6 fxe6 3. a4 d5 4. exd5 exd5 5. cxd5 Bxc5 6. bxc5 Qxd5 7. c4 Qe6 8. c3 Ne7 9. b4 h5 10. gxh5 Rxh5 11. g4 Rh8 12. g3 Nd7 13. b3 Qf7 14. g2 Qf8 15. a3 a6 16. bxa6 Rxa6 17. e4 Qf7 18. e3 Kd8 19. e2 Qe8 20. f5 Qf8 21. f4 Ra8 22. f3 Ra6 23. f2 Qe8 24. h5 Qf8 25. h4 Rg8 26. h3 Rh8 27. h2 Ra8 28. b5 Qe8 29. b4 Rf8 30. b3 Rh8 31. a2 Qf8 32. c2 Rg8 33. e5 Nxf5 34. gxf5 Nxc5 35. dxc5 Bxf5 36. g4 Be6 37. d4 Bc8 38. d3 Bd7 39. g3 Qf7 40. e4 Rf8 41. e3 Qe7 42. d2 Rh8 43. f5 Qe8 44. f4 Rxh5 45. gxh5 Bxf5 46. exf5 Qxh5 47. g4 Qh8 48. h5 Qe8 49. e4 Qg8 50. h4 Qf7 51. h3 Qe8 52. f3 Qe7 53. d5 Qf7 54. d4 Qg8 55. d3 Qe8 56. a6 bxa6 57. bxa6 Qf7 58. b5 Qf8 59. b4 Qe7 60. a5 Qe8 61. a4 Qh8 62. a3 Qe8 63. d6 Ra7 64. dxc7+ Kxc7 65. b6+ Kb8 66. bxa7+ Kc7 67. b5 Qc8 68. f6 Qg8 69. fxg7 Kd7 70. f5 Qd8 71. f4 Qc8 72. d5 Qd8 73. d4 Qc8 74. h6 Qe8 75. h5 Qc8 76. h4 Qd8 77. g6 Qa8 78. g5 Qg8 79. f6 Qc8 80. f5 Qa8 81. h7 Qc8 82. h6 Qe8 83. h5 Qc8 84. h8=Q Qxc5 85. dxc5 Kc7 86. g8=Q Kd7 87. Qgg7# 1-0
+
+
+[Event "Casual Racing Kings game"]
+[Site "https://lichess.org/wmPffi5R"]
+[Date "2020.02.02"]
+[White "lichess AI level 1"]
+[Black "Chote"]
+[Result "1-0"]
+[UTCDate "2020.02.02"]
+[UTCTime "00:08:44"]
+[WhiteElo "?"]
+[BlackElo "1500"]
+[Variant "Racing Kings"]
+[TimeControl "600+0"]
+[ECO "?"]
+[Opening "?"]
+[Termination "Time forfeit"]
+[FEN "8/8/8/8/8/8/krbnNBRK/qrbnNBRQ w - - 0 1"]
+[SetUp "1"]
+
+1. Kg3 Kb3 2. Nxc2 Kxc2 3. Kf4 Rb5 4. Nxc1 Kxc1 5. Bd4 R1b4 6. Bxb5 Rxb5 7. Bxa1 1-0
+
+
+[Event "Casual Atomic game"]
+[Site "https://lichess.org/1fIMnsjO"]
+[Date "2020.02.02"]
+[White "Chote"]
+[Black "lichess AI level 1"]
+[Result "0-1"]
+[UTCDate "2020.02.02"]
+[UTCTime "00:07:08"]
+[WhiteElo "1500"]
+[BlackElo "?"]
+[Variant "Atomic"]
+[TimeControl "600+0"]
+[ECO "?"]
+[Opening "?"]
+[Termination "Normal"]
+
+1. e3 e5 2. Bb5 Nc6 3. Bxc6 d5 4. Nf3 Bb4 5. Nxe5 Bxd2# 0-1
+
+
+[Event "Casual Crazyhouse game"]
+[Site "https://lichess.org/Vcvm0lyi"]
+[Date "2020.02.01"]
+[White "Chote"]
+[Black "lichess AI level 1"]
+[Result "0-1"]
+[UTCDate "2020.02.01"]
+[UTCTime "23:53:29"]
+[WhiteElo "1500"]
+[BlackElo "?"]
+[Variant "Crazyhouse"]
+[TimeControl "600+0"]
+[ECO "A04"]
+[Opening "Zukertort Opening: Queen's Gambit Invitation"]
+[Termination "Time forfeit"]
+
+1. Nf3 e6 2. Nc3 Nc6 3. d4 Bb4 4. Bg5 Nf6 5. a3 Be7 6. e4 O-O 7. h4 a6 8. e5 Nh5 9. g4 Nf6 10. exf6 Bxf6 11. N@e4 P@e2 12. Bxe2 d6 13. P@e5 dxe5 14. dxe5 Qxd1+ 15. Kxd1 Nxe5 16. Nxe5 Bxe5 17. Q@d8 Rxd8+ 18. Bxd8 Bd7 19. Bg5 Re8 20. R@a7 P@g2 21. Re1 P@h2 22. Rxb7 h1=R 23. Rxh1 gxh1=R+ 24. Kd2 Q@d4+ 25. Bd3 N@c4+ 26. Ke2 Rxa1 0-1
+
+
+[Event "Casual King of the Hill game"]
+[Site "https://lichess.org/NkeaSWAL"]
+[Date "2020.02.01"]
+[White "Chote"]
+[Black "lichess AI level 3"]
+[Result "0-1"]
+[UTCDate "2020.02.01"]
+[UTCTime "23:44:25"]
+[WhiteElo "1500"]
+[BlackElo "?"]
+[Variant "King of the Hill"]
+[TimeControl "600+0"]
+[ECO "D02"]
+[Opening "Queen's Pawn Game: Zukertort Variation"]
+[Termination "Time forfeit"]
+
+1. d4 d5 2. Nf3 c6 3. Nc3 Nf6 4. e3 Bf5 5. Bd3 g6 6. Ke2 Bxd3+ 7. Kxd3 Ng4 8. Nxd5 Qxd5 9. e4 Nxf2+ 10. Ke3 Nxd1+ 11. Rxd1 Qc4 12. e5 Qxc2 0-1
+
+

@@ -16,7 +16,72 @@ import json
 global_message = ''
 global_color = 0
 
+#Funcion
+def insert_games(user,username):
+    if user.nick.kind == 0:
+        print("manual")
+        change_user(username)
+
+    list_info, list_game = data_split(username)
+    list_white, list_black, list_result, list_ECO, list_Opening = split_Header(list_info)
+    tupla_color, mov_white, mov_black = split_color(list_game)
+
+    print("list_info", len(list_info))
+    print("list_game", len(list_game))
+    print("list_white", len(list_white))
+    print("list_black", len(list_black))
+    print("list_result", len(list_result))
+    print("list_ECO", len(list_ECO))
+    print("list_Opening", len(list_Opening))
+    print("tupla_color", len(tupla_color))
+    print("mov_white", len(mov_white))
+    print("mov_black", len(mov_black))
+    print("usuario", user)
+    print("usuario", user.nick)
+    print("rated", user.nick.id)
+
+    df = pd.DataFrame(list(zip(list_white, list_black, list_result, list_ECO, list_Opening)), columns=[
+                    'Blancas', 'Negras', 'Result', 'ECO', 'Opening'])
+    codigo_white_win, num_white_win, codigo_black_win, num_black_win, codigo_white_draw, num_white_draw, codigo_black_draw, num_black_draw, codigo_white_lose, num_white_lose, codigo_black_lose, num_black_lose, win_white, draw_white, lose_white, win_black, draw_black, lose_black = split_dataframe(
+        df, str(username))
+
+    science = DataAnalyst.objects.create(games=len(list_game), 
+                                        win_w=win_white, 
+                                        draw_w=draw_white,
+                                        lose_w=lose_white, 
+                                        win_b=win_black, 
+                                        draw_b=draw_black, 
+                                        lose_b=lose_black)
+
+    apertura = opening.objects.create(eco_ww=codigo_white_win,
+                                    eco_dw=codigo_white_draw,
+                                    eco_lw=codigo_white_lose,
+                                    eco_b=codigo_black_win,
+                                    eco_db=codigo_black_draw, 
+                                    eco_lb=codigo_black_lose,
+                                    n_eco_ww=num_white_win,
+                                    n_eco_dw=num_white_draw,
+                                    n_eco_lw=num_white_lose, 
+                                    n_eco_b=num_black_win, 
+                                    n_eco_db=num_black_draw, 
+                                    n_eco_lb=num_black_lose,
+                                    data=science)
+
+    for i in range(0,10):
+        game = Games.objects.create(header_game = list_info[i], move_game = list_game[i], perfil_id = user.nick.id)
+        titulos = Header.objects.create(event='1',site='2',date='3',white = list_white[i], elo_w= '4',elo_b='6', black = list_black[i] ,result = list_result[i],variant='8', eco = list_ECO[i], opening=list_Opening[i], game_id=game.id, scienc_id = science.id)
+        movimientos = Moves.objects.create(white = mov_white[i], black = mov_black[i],game_id=game.id)
+
+    scienc = user.nick.partidas.first().header.scienc_id
+    print("scienc", scienc)
+    data = DataAnalyst.objects.get(id=int(scienc))
+    print("scienc", data.games)
+
 # Vistas de Session
+
+def Home(request):
+    return render(request, 'Views/Home.html', {})
+
 def base(request):
     return render(request, 'Views/base.html', {})
 
@@ -179,8 +244,9 @@ def games(request, username):
     if request.method == 'POST':
         print("archivo", request.FILES['title'].name)
         print("tamaño", request.FILES['title'].size)
+        name = username + '.pgn'
         fs = FileSystemStorage()
-        fs.save(request.FILES['title'].name, request.FILES['title'])
+        fs.save(name, request.FILES['title'])
             
     # revisa si existe
     search_png = select_png(username)
@@ -194,82 +260,22 @@ def games(request, username):
             print("No existe partidas o 0 partidas")
             user = User.objects.get(username=username)
             elo = user.nick.rankings.all()
-            #scienc = user.nick.partidas.first().header.scienc_id
-            #data = DataAnalyst.objects.get(id=int(scienc))
             message = "!No existe partidas o 0 partidas!"
             return render(request, 'Views/games.html', {'elo': elo, 'message':message})
 
         else:
-            list_info, list_game = data_split(username)
-            list_white, list_black, list_result, list_ECO, list_Opening = split_Header(list_info)
-            tupla_color, mov_white, mov_black = split_color(list_game)
-
-            print("list_info", len(list_info))
-            print("list_game", len(list_game))
-            print("list_white", len(list_white))
-            print("list_black", len(list_black))
-            print("list_result", len(list_result))
-            print("list_ECO", len(list_ECO))
-            print("list_Opening", len(list_Opening))
-            print("tupla_color", len(tupla_color))
-            print("mov_white", len(mov_white))
-            print("mov_black", len(mov_black))
-
             user = User.objects.get(username=username)
-            print("usuario", user)
-            print("usuario", user.nick)
-            print("rated", user.nick.id)
-
-            df = pd.DataFrame(list(zip(list_white, list_black, list_result, list_ECO, list_Opening)), columns=[
-                            'Blancas', 'Negras', 'Result', 'ECO', 'Opening'])
-            codigo_white_win, num_white_win, codigo_black_win, num_black_win, codigo_white_draw, num_white_draw, codigo_black_draw, num_black_draw, codigo_white_lose, num_white_lose, codigo_black_lose, num_black_lose, win_white, draw_white, lose_white, win_black, draw_black, lose_black = split_dataframe(
-                df, str(username))
-
-            science = DataAnalyst.objects.create(games=len(list_game), 
-                                                win_w=win_white, 
-                                                draw_w=draw_white,
-                                                lose_w=lose_white, 
-                                                win_b=win_black, 
-                                                draw_b=draw_black, 
-                                                lose_b=lose_black)
-
-            apertura = opening.objects.create(eco_ww=codigo_white_win,
-                                            eco_dw=codigo_white_draw,
-                                            eco_lw=codigo_white_lose,
-                                            eco_b=codigo_black_win,
-                                            eco_db=codigo_black_draw, 
-                                            eco_lb=codigo_black_lose,
-                                            n_eco_ww=num_white_win,
-                                            n_eco_dw=num_white_draw,
-                                            n_eco_lw=num_white_lose, 
-                                            n_eco_b=num_black_win, 
-                                            n_eco_db=num_black_draw, 
-                                            n_eco_lb=num_black_lose,
-                                            data=science)
-
-            for i in range(0,10):
-                game = Games.objects.create(header_game = list_info[i], move_game = list_game[i], perfil_id = user.nick.id)
-                titulos = Header.objects.create(event='1',site='2',date='3',white = list_white[i], elo_w= '4',elo_b='6', black = list_black[i] ,result = list_result[i],variant='8', eco = list_ECO[i], opening=list_Opening[i], game_id=game.id, scienc_id = science.id)
-                movimientos = Moves.objects.create(white = mov_white[i], black = mov_black[i],game_id=game.id)
-
-            #partidas = user.nick.partidas.header_id.partidas.all()
-            scienc = user.nick.partidas.first().header.scienc_id
-            #print(vars(scienc))
-            #print(dir(scienc))
-            print("scienc", scienc)
-            data = DataAnalyst.objects.get(id=int(scienc))
-            print("scienc", data.games)
-            #aqui
-            #return render(request, 'Views/games.html', {'data': data})
+            print("kind",user.nick.kind)
+            insert_games(user,username)
             return HttpResponseRedirect('/view_games/%s/' % user)
+
 
     # elif search_png == 1:
     #    opcion = input("¿Desea actualizar?")
-    return HttpResponseRedirect('/view_games/%s/' % user)
+    print("pase")
+    print("pase",username)
+    return HttpResponseRedirect('/view_games/%s/' % username)
 
-
-def Home(request):
-    return render(request, 'Views/Home.html', {})
 
 def view_games(request, username):
     if request.method == 'GET':
@@ -293,14 +299,22 @@ def view_games(request, username):
     if request.method == 'POST':
         print("archivo", request.FILES['title'].name)
         print("tamaño", request.FILES['title'].size)
+        name = username + '.pgn'
         fs = FileSystemStorage()
-        fs.save(request.FILES['title'].name, request.FILES['title'])
+        fs.save(name, request.FILES['title'])
         message = "Partidas Cargadas"
         print(message)
-        return render(request, 'Views/games.html', {'message': message })
+        user = User.objects.get(username=username)
+        if user.nick.kind == 0:
+            print("verificar user")
+
+        insert_games(user,username)
+        return HttpResponseRedirect('/view_games/%s/' % user)
+
     
 def estadisticas(request, username):
     user = User.objects.get(username=username)
+    print("kind",user.nick.kind)
     elo = user.nick.rankings.all()
     scienc = user.nick.partidas.first().header.scienc_id
     data = DataAnalyst.objects.get(id=int(scienc))

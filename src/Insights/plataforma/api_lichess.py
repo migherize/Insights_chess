@@ -3,7 +3,7 @@ import os
 
 token = os.getenv('token_lichess')
 cabeceras = {'Authorization': 'Bearer {}'.format(token)}
-split_path = '/Users/migherize/Sourcetree/InsightsChess/src/Insights/input'
+split_path = '/Users/migherize/Sourcetree/InsightsChess/src/Insights/media'
 base_url = "https://lichess.org/api"
 
 def account(user):

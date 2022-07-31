@@ -6,13 +6,14 @@ from os import path
 import re, csv
 import pandas as pd
 import requests
+from collections import Counter
 
 exp_jugadas = r'[0-9]+\.\s*[A-Za-z0-9+-=!?#]+\s[A-Za-z0-9+-=!?#]+|[0-9]+\.\s*[A-Za-z0-9+-=!?#]+'
 jugadas_white = r'^[0-9]+\.\s*[A-Za-z0-9+-=!?#]+'
 jugadas_black = r'\s+[A-Za-z0-9+-=!?#]+$'
 
 #constanst
-split_path = '/Users/migherize/Sourcetree/InsightsChess/src/Insights/input'
+split_path = '/Users/migherize/Sourcetree/InsightsChess/src/Insights/media'
 
 
 
@@ -219,6 +220,34 @@ def split_color(game):
     return tupla_color, list_white, list_black
     
 
+def change_user(user):
+    lista = []
+    archive = open(path.join(split_path, ('{}.pgn'.format(user))), "r")
+    lines = archive.readline()
+    if lines:
+        for line in archive.readlines():
+            column_aux = re.findall(r'((?:\S\s?)+)',line)
+            if column_aux:
+                #print("line",column_aux)
+                jugadores = re.findall(r'^White\s|^Black\s',column_aux[0].replace('[','').replace(']',''))
+                if jugadores:
+                    jugadores = re.findall(r'\"((?:\S\s?)+)\"',column_aux[0])
+                    print("jugadores",jugadores)
+                    lista.append(jugadores[0].replace('[','').replace(']','').replace('"','').replace('"',''))
+
+        print(Counter(lista).most_common()[0][0])
+        archive.close()
+        with open(path.join(split_path, ('{}.pgn'.format(user))), 'r+') as f:
+            text = f.read()
+            text = re.sub(Counter(lista).most_common()[0][0], user, text)
+            f.seek(0)
+            f.write(text)
+            f.truncate()
+
+    #print(Counter(lista).most_common()[0][1])
+    #print(Counter(lista).most_common())
+    #return Counter(lista).most_common()[0][0]
+
 def data_split(user):
     archive = open(path.join(split_path, ('{}.pgn'.format(user))), "r")
     lines = archive.readline()
@@ -255,5 +284,3 @@ def data_split(user):
         #numero = input("continuar ")
     
     return list_titles,list_data
-
-
