@@ -3,8 +3,6 @@ from django.shortcuts import render
 from django.contrib.auth import login, logout, authenticate
 from django.core.files.storage import FileSystemStorage
 # Django Rest Framework
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
 from django.http import HttpResponseRedirect
 from .forms import *
 from .models import *
@@ -42,7 +40,7 @@ def insert_games(user,username):
 
     df = pd.DataFrame(list(zip(list_white, list_black, list_result, list_ECO, list_Opening)), columns=[
                     'Blancas', 'Negras', 'Result', 'ECO', 'Opening'])
-    codigo_white_win, num_white_win, codigo_black_win, num_black_win, codigo_white_draw, num_white_draw, codigo_black_draw, num_black_draw, codigo_white_lose, num_white_lose, codigo_black_lose, num_black_lose, win_white, draw_white, lose_white, win_black, draw_black, lose_black = split_dataframe(
+    codigo_white_win, num_white_win, codigo_black_win, num_black_win, codigo_white_draw, num_white_draw, codigo_black_draw, num_black_draw, codigo_white_lose, num_white_lose, codigo_black_lose, num_black_lose, win_white, draw_white, lose_white, win_black, draw_black, lose_black,opening_white_win,opening_black_win,opening_white_draw,opening_black_draw,opening_white_lose,opening_black_lose = split_dataframe(
         df, str(username))
 
     science = DataAnalyst.objects.create(games=len(list_game), 
@@ -65,6 +63,12 @@ def insert_games(user,username):
                                     n_eco_b=num_black_win, 
                                     n_eco_db=num_black_draw, 
                                     n_eco_lb=num_black_lose,
+                                    name_eco_ww=opening_white_win,
+                                    name_eco_dw=opening_black_win,
+                                    name_eco_lw=opening_white_draw,
+                                    name_eco_b=opening_black_draw,
+                                    name_eco_db=opening_white_lose,
+                                    name_eco_lb=opening_black_lose,
                                     data=science)
 
     for i in range(0,10):
@@ -240,7 +244,8 @@ def signOut(request):
 
 # Vistas de usuario
 def games(request, username):
-    print("entre")
+    print("Vista Games")
+    # Metodo manual
     if request.method == 'POST':
         print("archivo", request.FILES['title'].name)
         print("tamaño", request.FILES['title'].size)
@@ -248,7 +253,7 @@ def games(request, username):
         fs = FileSystemStorage()
         fs.save(name, request.FILES['title'])
             
-    # revisa si existe
+    # Busca el PGN si existe
     search_png = select_png(username)
     print("search_png", search_png)
     print("username", username)
@@ -269,11 +274,14 @@ def games(request, username):
             insert_games(user,username)
             return HttpResponseRedirect('/view_games/%s/' % user)
 
-
     # elif search_png == 1:
     #    opcion = input("¿Desea actualizar?")
-    print("pase")
-    print("pase",username)
+
+    else:
+        user = User.objects.get(username=username)
+        print("kind",user.nick.kind)
+        insert_games(user,username)
+    
     return HttpResponseRedirect('/view_games/%s/' % username)
 
 

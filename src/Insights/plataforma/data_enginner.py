@@ -17,10 +17,10 @@ split_path = '/Users/migherize/Sourcetree/InsightsChess/src/Insights/media'
 
 
 
-input_path = '/Users/migherize/SourceTree/Insights_chess/src/Data_enginner/input_request'
-output_split_path = '/Users/migherize/SourceTree/Insights_chess/src/Data_enginner/output_split'
-join_path = '/Users/migherize/SourceTree/Insights_chess/src/Data_enginner/join_split'
-output = '/Users/migherize/SourceTree/Insights_chess/src/Data_enginner/output'
+input_path = '/Users/migherize/SourceTree/InsightsChess/src/Data_enginner/input_request'
+output_split_path = '/Users/migherize/SourceTree/InsightsChess/src/Data_enginner/output_split'
+join_path = '/Users/migherize/SourceTree/InsightsChess/src/Data_enginner/join_split'
+output = '/Users/migherize/SourceTree/InsightsChess/src/Data_enginner/output'
 workname = 'data.pgn'
 base_url = "https://lichess.org/api"
 
@@ -53,34 +53,50 @@ def split_dataframe(df,user):
     
     Eco_white_lose = []
     Eco_black_lose = []
+
+    ope_white_win = []
+    ope_black_win = []
     
+    ope_white_draw = []
+    ope_black_draw = []
+    
+    ope_white_lose = []
+    ope_black_lose = []
+
+    print("df",df)
     for i in df.index: 
         #print("Result: ", str(df['Result'][i]), "ECO: ", str(df['ECO'][i]))
         # valores positivos
         if user == str(df['Blancas'][i]).lower() and str(df['Result'][i]) == '1-0':
             win_white += 1
             Eco_white_win.append(str(df['ECO'][i]))
+            ope_white_win.append(str(df['Opening'][i]))
         elif user == str(df['Negras'][i]).lower() and str(df['Result'][i]) == '0-1':
             win_black += 1
             Eco_black_win.append(str(df['ECO'][i]))
+            ope_black_win.append(str(df['Opening'][i]))
         
         # valores neutros
         elif user == str(df['Blancas'][i]).lower() and str(df['Result'][i]) == '1/2-1/2':
             draw_white += 1
             Eco_white_draw.append(str(df['ECO'][i]))
+            ope_white_draw.append(str(df['Opening'][i]))
             
         elif user == str(df['Negras'][i]).lower() and str(df['Result'][i]) == '1/2-1/2':
             draw_black += 1
             Eco_black_draw.append(str(df['ECO'][i]))
+            ope_black_draw.append(str(df['Opening'][i]))
         
         # valores negativos
         elif user == str(df['Negras'][i]).lower() and str(df['Result'][i]) == '1-0':
             lose_white += 1
             Eco_white_lose.append(str(df['ECO'][i]))
+            ope_white_lose.append(str(df['Opening'][i]))
             
         elif user == str(df['Blancas'][i]).lower() and str(df['Result'][i]) == '0-1':
             lose_black += 1
             Eco_black_lose.append(str(df['ECO'][i]))
+            ope_black_lose.append(str(df['Opening'][i]))
             
         else:
             print(str(df['Result'][i]),str(df['Negras'][i]))
@@ -94,45 +110,100 @@ def split_dataframe(df,user):
     print("lose_black:",lose_black)
 
     if win_white != 0 and win_black != 0 and draw_white != 0 and draw_black != 0 and lose_white != 0 and lose_black != 0:
-        print("Victorias con Blancas",max(set(Eco_white_win), key = Eco_white_win.count), Eco_white_win.count(max(set(Eco_white_win), key = Eco_white_win.count)))        
-        print("Victorias con Negras",max(set(Eco_black_win), key = Eco_black_win.count), Eco_black_win.count(max(set(Eco_black_win), key = Eco_black_win.count)))        
-        print("tablas con Blancas",max(set(Eco_white_draw), key = Eco_white_draw.count), Eco_white_draw.count(max(set(Eco_white_draw), key = Eco_white_draw.count)))        
-        print("tablas con Blancas",max(set(Eco_black_draw), key = Eco_black_draw.count), Eco_black_draw.count(max(set(Eco_black_draw), key = Eco_black_draw.count)))        
-        print("Perdi con Blancas",max(set(Eco_white_lose), key = Eco_white_lose.count), Eco_white_lose.count(max(set(Eco_white_lose), key = Eco_white_lose.count)))        
-        print("Perdi con Blancas",max(set(Eco_black_lose), key = Eco_black_lose.count), Eco_black_lose.count(max(set(Eco_black_lose), key = Eco_black_lose.count)))        
-        codigo_white_win = max(set(Eco_white_win), key = Eco_white_win.count)
-        num_white_win = Eco_white_win.count(max(set(Eco_white_win), key = Eco_white_win.count))
-        
-        codigo_black_win = max(set(Eco_black_win), key = Eco_black_win.count)
-        num_black_win = Eco_black_win.count(max(set(Eco_black_win), key = Eco_black_win.count))
-        
-        codigo_white_draw = max(set(Eco_white_draw), key = Eco_white_draw.count)
-        num_white_draw = Eco_white_draw.count(max(set(Eco_white_draw), key = Eco_white_draw.count))
-        
-        codigo_black_draw = max(set(Eco_black_draw), key = Eco_black_draw.count)
-        num_black_draw = Eco_black_draw.count(max(set(Eco_black_draw), key = Eco_black_draw.count))
+        print((Counter(Eco_white_win).most_common()))
+        print("Victorias con Blancas**", (Counter(Eco_white_win).most_common()[0][0]), Counter(Eco_white_win).most_common()[0][1])        
+        print("Victorias con Negras**", (Counter(Eco_black_win).most_common()[0][0]), Counter(Eco_black_win).most_common()[0][1])        
+        print("tablas con Blancass**", (Counter(Eco_white_draw).most_common()[0][0]), Counter(Eco_white_draw).most_common()[0][1])        
+        print("tablas con Negras**", (Counter(Eco_black_draw).most_common()[0][0]), Counter(Eco_black_draw).most_common()[0][1])        
+        print("tablas con Blancas**", (Counter(Eco_white_lose).most_common()[0][0]), Counter(Eco_white_lose).most_common()[0][1])        
+        print("tablas con Blancas**", (Counter(Eco_black_lose).most_common()[0][0]), Counter(Eco_black_lose).most_common()[0][1])        
 
-        codigo_white_lose = max(set(Eco_white_lose), key = Eco_white_lose.count)
-        num_white_lose = Eco_white_lose.count(max(set(Eco_white_lose), key = Eco_white_lose.count))
+        l_codigo_white_win = []
+        l_num_white_win = []
+        l_name_white_win = []
+        
+        l_codigo_black_win = []
+        l_num_black_win = []
+        l_name_black_win = []
+        
+        l_codigo_white_draw = []
+        l_num_white_draw = []
+        l_name_white_draw = []
+        
+        l_codigo_black_draw = []
+        l_num_black_draw = []
+        l_name_black_draw = []
+        
+        l_codigo_white_lose = []
+        l_num_white_lose = []
+        l_name_white_lose = []
+        
+        l_codigo_black_lose = []
+        l_num_black_lose = []
+        l_name_black_lose = []
 
-        codigo_black_lose = max(set(Eco_black_lose), key = Eco_black_lose.count)
-        num_black_lose = Eco_black_lose.count(max(set(Eco_black_lose), key = Eco_black_lose.count))
+
+        
+        for x in range(0,3):
+            l_codigo_white_win.append(Counter(Eco_white_win).most_common()[x][0])
+            l_num_white_win.append(Counter(Eco_white_win).most_common()[x][1])
+            l_name_white_win.append(Counter(ope_white_win).most_common()[x][0])
+            l_codigo_black_win.append(Counter(Eco_black_win).most_common()[x][0])
+            l_num_black_win.append(Counter(Eco_black_win).most_common()[x][1])
+            l_name_black_win.append(Counter(ope_black_win).most_common()[x][0])
+            
+            l_codigo_white_draw.append(Counter(Eco_white_draw).most_common()[x][0])
+            l_num_white_draw.append(Counter(Eco_white_draw).most_common()[x][1])
+            l_name_white_draw.append(Counter(ope_white_draw).most_common()[x][0])
+            l_codigo_black_draw.append(Counter(Eco_black_draw).most_common()[x][0])
+            l_num_black_draw.append(Counter(Eco_black_draw).most_common()[x][1])
+            l_name_black_draw.append(Counter(ope_black_draw).most_common()[x][0])
+            
+            l_codigo_white_lose.append(Counter(Eco_white_lose).most_common()[x][0])
+            l_num_white_lose.append(Counter(Eco_white_lose).most_common()[x][1])
+            l_name_white_lose.append(Counter(ope_white_lose).most_common()[x][0])
+            l_codigo_black_lose.append(Counter(Eco_black_lose).most_common()[x][0])
+            l_num_black_lose.append(Counter(Eco_black_lose).most_common()[x][1])
+            l_name_black_lose.append(Counter(ope_black_lose).most_common()[x][0])
+
+        codigo_white_win = str(l_codigo_white_win)
+        num_white_win = str(l_num_white_win)
+        opening_white_win = str(l_name_white_win)
+        codigo_black_win = str(l_codigo_black_win)
+        num_black_win = str(l_num_black_win)
+        opening_black_win = str(l_name_black_win)
+        
+        codigo_white_draw = str(l_codigo_white_draw)
+        num_white_draw = str(l_num_white_draw)
+        opening_white_draw = str(l_name_white_draw)
+        codigo_black_draw = str(l_codigo_black_draw)
+        num_black_draw = str(l_num_black_draw)
+        opening_black_draw = str(l_name_black_draw)
+        
+        codigo_white_lose = str(l_codigo_white_lose)
+        num_white_lose = str(l_num_white_lose)
+        opening_white_lose = str(l_name_white_lose)
+        codigo_black_lose = str(l_codigo_black_lose)
+        num_black_lose = str(l_num_black_lose)
+        opening_black_lose = str(l_name_black_lose)
 
     else:
-        codigo_white_win = -1
-        num_white_win = -1
-        codigo_black_win = -1
-        num_black_win= -1
-        codigo_white_draw= -1
-        num_white_draw= -1
-        codigo_black_draw= -1
-        num_black_draw= -1
-        codigo_white_lose= -1
-        num_white_lose= -1
-        codigo_black_lose= -1
-        num_black_lose= -1
+        codigo_white_win = ''
+        num_white_win = ''
+        codigo_black_win = ''
+        num_black_win= ''
+        
+        codigo_white_draw= ''
+        num_white_draw= ''
+        codigo_black_draw= ''
+        num_black_draw= ''
+        
+        codigo_white_lose= ''
+        num_white_lose= ''
+        codigo_black_lose= ''
+        num_black_lose= ''
 
-    return codigo_white_win, num_white_win, codigo_black_win, num_black_win, codigo_white_draw, num_white_draw, codigo_black_draw, num_black_draw, codigo_white_lose, num_white_lose, codigo_black_lose, num_black_lose, win_white, draw_white,lose_white, win_black, draw_black ,lose_black
+    return codigo_white_win, num_white_win, codigo_black_win, num_black_win, codigo_white_draw, num_white_draw, codigo_black_draw, num_black_draw, codigo_white_lose, num_white_lose, codigo_black_lose, num_black_lose, win_white, draw_white,lose_white, win_black, draw_black ,lose_black,opening_white_win ,opening_black_win ,opening_white_draw ,opening_black_draw ,opening_white_lose ,opening_black_lose 
 
 def split_Header(info):
     list_white = []
@@ -284,3 +355,4 @@ def data_split(user):
         #numero = input("continuar ")
     
     return list_titles,list_data
+

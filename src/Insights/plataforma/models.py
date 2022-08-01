@@ -85,19 +85,27 @@ class DataAnalyst(models.Model):
 
 class opening(models.Model):
     # ecos frecuencia high
-    eco_ww = models.CharField(max_length=20, null=True, blank=True, default=None)
-    eco_dw = models.CharField(max_length=20, null=True, blank=True, default=None)
-    eco_lw = models.CharField(max_length=20, null=True, blank=True, default=None)
-    eco_b = models.CharField(max_length=20, null=True, blank=True, default=None)
-    eco_db = models.CharField(max_length=20, null=True, blank=True, default=None)
-    eco_lb = models.CharField(max_length=20, null=True, blank=True, default=None)
+    eco_ww = models.CharField(max_length=200, null=True, blank=True, default=None)
+    eco_dw = models.CharField(max_length=200, null=True, blank=True, default=None)
+    eco_lw = models.CharField(max_length=200, null=True, blank=True, default=None)
+    eco_b = models.CharField(max_length=200, null=True, blank=True, default=None)
+    eco_db = models.CharField(max_length=200, null=True, blank=True, default=None)
+    eco_lb = models.CharField(max_length=200, null=True, blank=True, default=None)
     # ecos frecuencia high
-    n_eco_ww = models.IntegerField()
-    n_eco_dw = models.IntegerField()
-    n_eco_lw = models.IntegerField()
-    n_eco_b = models.IntegerField()
-    n_eco_db = models.IntegerField()
-    n_eco_lb = models.IntegerField()
+    n_eco_ww = models.CharField(max_length=200, null=True, blank=True, default=None)
+    n_eco_dw = models.CharField(max_length=200, null=True, blank=True, default=None)
+    n_eco_lw = models.CharField(max_length=200, null=True, blank=True, default=None)
+    n_eco_b = models.CharField(max_length=200, null=True, blank=True, default=None)
+    n_eco_db = models.CharField(max_length=200, null=True, blank=True, default=None)
+    n_eco_lb = models.CharField(max_length=200, null=True, blank=True, default=None)
+
+    # Name frecuencia high
+    name_eco_ww = models.CharField(max_length=200, null=True, blank=True, default=None)
+    name_eco_dw = models.CharField(max_length=200, null=True, blank=True, default=None)
+    name_eco_lw = models.CharField(max_length=200, null=True, blank=True, default=None)
+    name_eco_b = models.CharField(max_length=200, null=True, blank=True, default=None)
+    name_eco_db = models.CharField(max_length=200, null=True, blank=True, default=None)
+    name_eco_lb = models.CharField(max_length=200, null=True, blank=True, default=None)
 
     data = models.OneToOneField(DataAnalyst, related_name="data_ciencia", on_delete=models.CASCADE)
 

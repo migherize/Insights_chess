@@ -12,7 +12,7 @@
       <div class="column">Traer Partidas de Lichess</div>
     </div>
     <div class="columns is-desktop">
-      <div class="column">    
+      <div class="column">  
         <form method="POST" enctype="multipart/form-data">
           {% csrf_token %}
           <div class="file">
@@ -32,7 +32,7 @@
         </form>
       </div>
       <div class="column">
-        <a class="button is-success is-medium is-fullwidth" onclick="alert('Cargando')" href="{% url 'games' username=user.username %}">
+        <a class="button is-success is-medium is-fullwidth" href="{% url 'games' username=user.username %}">
           <i class="fas fa-chess-knight" > Extraer Partidas de Lichess</i>
           </a>
           <p class="help is-danger">{{message}}</p>
