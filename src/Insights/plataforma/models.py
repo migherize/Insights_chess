@@ -110,15 +110,15 @@ class opening(models.Model):
     data = models.OneToOneField(DataAnalyst, related_name="data_ciencia", on_delete=models.CASCADE)
 
 class Header(models.Model):
-    event = models.CharField(max_length=20, null=True, blank=True, default=None)
-    site = models.CharField(max_length=20, null=True, blank=True, default=None)
+    event = models.CharField(max_length=200, null=True, blank=True, default=None)
+    site = models.CharField(max_length=200, null=True, blank=True, default=None)
     date = models.CharField(max_length=20, null=True, blank=True, default=None)
-    white = models.CharField(max_length=20, null=True, blank=True, default=None)
+    white = models.CharField(max_length=200, null=True, blank=True, default=None)
     elo_w = models.CharField(max_length=20, null=True, blank=True, default=None)
     elo_b = models.CharField(max_length=20, null=True, blank=True, default=None)
-    black = models.CharField(max_length=20, null=True, blank=True, default=None)
+    black = models.CharField(max_length=200, null=True, blank=True, default=None)
     result = models.CharField(max_length=20, null=True, blank=True, default=None)
-    variant = models.CharField(max_length=20, null=True, blank=True, default=None)
+    variant = models.CharField(max_length=200, null=True, blank=True, default=None)
     eco = models.CharField(max_length=20, null=True, blank=True, default=None)
     opening = models.CharField(max_length=250, null=True, blank=True, default=None)
     

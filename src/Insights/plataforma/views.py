@@ -9,12 +9,19 @@ from .models import *
 from .api_lichess import *
 from .data_enginner import *
 import json
+# engine data
+import matplotlib.pyplot as plt
+import base64
+from io import BytesIO
+import scipy.cluster.hierarchy as shc
+from sklearn.preprocessing import normalize
+from sklearn.cluster import AgglomerativeClustering
 
 # Variable Global
 global_message = ''
 global_color = 0
 
-#Funcion
+#Funciones
 def insert_games(user,username):
     if user.nick.kind == 0:
         print("manual")
@@ -71,6 +78,13 @@ def insert_games(user,username):
                                     name_eco_lb=opening_black_lose,
                                     data=science)
 
+    print("LLEGUE")
+    print(len(list_ECO),"list_ECO",list_ECO)
+    print(len(list_Opening),"list_Opening",list_Opening)
+    print(len(list_result),"list_result",list_result)
+    print(len(list_white),"list_white", list_white)
+    print(len(list_black),"list_black",list_black)
+
     for i in range(0,10):
         game = Games.objects.create(header_game = list_info[i], move_game = list_game[i], perfil_id = user.nick.id)
         titulos = Header.objects.create(event='1',site='2',date='3',white = list_white[i], elo_w= '4',elo_b='6', black = list_black[i] ,result = list_result[i],variant='8', eco = list_ECO[i], opening=list_Opening[i], game_id=game.id, scienc_id = science.id)
@@ -81,6 +95,113 @@ def insert_games(user,username):
     data = DataAnalyst.objects.get(id=int(scienc))
     print("scienc", data.games)
 
+def clean_dataframe(df):
+    #dataframe = df.replace('-1', None).dropna()
+    dataframe = df.replace('-1','0')
+    dataframe = dataframe.set_index('Jugador')
+    for index, column in enumerate(tuple(dataframe.columns)):
+        if column == 'Jugador':
+            continue
+        
+        if index < 7:
+            continue
+        
+        for j,i in enumerate(dataframe[column]):
+            data = float(i.replace('A','1.').replace('B','2.').replace('C','3.').replace('D','4.').replace('E','5.'))
+            dataframe.iloc[j, index] = data
+    
+    print("salida clean_dataframe")
+    print(dataframe)
+    return dataframe
+#__________________________________________________________________
+# Grafica del dataframe
+
+def see_graph(df, dividing_line, NORMALIZE, df_normalize,corte_t):
+    if NORMALIZE:
+        data_escaled = pd.DataFrame(df_normalize, columns=df.columns)
+        info = 'con data normalizada'
+    else:
+        data_escaled = df
+        info = 'sin data normalizada'
+
+    #print(df,NORMALIZE)
+    Clustering_Jeraruico = shc.linkage(data_escaled,method="ward")
+
+    if dividing_line:
+        plt.figure(figsize=(14,7))
+        plt.title(f"Dendograma {info}".strip())
+        dend = shc.dendrogram(Clustering_Jeraruico)
+        clusters = shc.fcluster(Clustering_Jeraruico, t=corte_t, criterion='distance')
+        print("clusters",clusters)
+        max_value = max(clusters)
+        print("max_value",max_value)
+        plt.axhline(y=20000,color='r',linestyle='--')
+        plt.show()
+        return
+
+    plt.figure(figsize=(10,5))
+    plt.title("Dendrograms")
+    dend = shc.dendrogram(Clustering_Jeraruico)
+    clusters = shc.fcluster(Clustering_Jeraruico, t=3, criterion='distance')
+    print("clusters",clusters)
+    plt.show()
+
+#__________________________________________________________________
+# cluster
+def get_graph():
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)
+    image_png = buffer.getvalue()
+    graph = base64.b64encode(image_png)
+    graph = graph.decode('utf-8')
+    buffer.close()
+    return graph
+
+def do_cluster(df):
+    #print(df.dtypes)
+    cluster = AgglomerativeClustering(n_clusters=3, affinity='euclidean', linkage='ward')
+    predict = cluster.fit_predict(df)
+    #print("predict",predict)
+    #print("predict",len(predict))
+    
+    # Grafica de Victoriass
+    plt.switch_backend('AGG')
+    plt.figure(figsize=(10,7))
+    plt.title('Cluster de victorias')
+    plt.scatter(
+        df['eco_ww_1'],
+        df['eco_b_1'],
+        c=cluster.labels_
+    )
+    #plt.show()
+    plt.tight_layout()
+    graph = get_graph()
+    plt.savefig("cluster.png")
+    
+    '''
+    # Grafica de derrotas
+    plt.switch_backend('AGG')
+    plt.figure(figsize=(10,7))
+    plt.scatter(
+        df['Perdidas Blancas'],
+        df['Perdidas Negras'],
+        c=cluster.labels_
+    )
+    #plt.show()
+    plt.savefig("cluster_2.png")
+    '''
+    bank_cust = df.reset_index()
+    clusterDF = pd.DataFrame(predict)
+    clusterDF.columns = ['Cluster_predicted']
+    combineDF = pd.concat([bank_cust,clusterDF],axis = 1).reset_index()
+    combineDF = combineDF.drop(['index'],axis=1)
+    print("combineDF")
+    print(combineDF)
+    return graph, predict
+
+#__________________________________________________________________
+# Ejecucion de codigo
 # Vistas de Session
 
 def Home(request):
@@ -327,38 +448,116 @@ def estadisticas(request, username):
     scienc = user.nick.partidas.first().header.scienc_id
     data = DataAnalyst.objects.get(id=int(scienc))
     print("Id",scienc)
-    #data = opening.objects.get(id=int(aperturas.opening))
+    print("aperturas",type(data.data_ciencia))
+    #alldata = DataAnalyst.objects.all()
+    #print("aperturas",vars(data.data_ciencia))
+    #dict_aperturas = data.data_ciencia.__dict__
+    #for clave, valor in dict_aperturas.items():
+    #    print(clave,valor)
+
+
+    #print("aperturas",data.data_ciencia.eco_db)
+    #print("aperturas",data.data_ciencia.eco_db)
     return render(request, 'Views/estadisticas.html', {'elo': elo , 'data': data})
 
 def insight(request, username):
     user = User.objects.get(username=username)
     elo = user.nick.rankings.all()
-    # Insight
-    data = DataAnalyst.objects.all()
+    
+    # DataAnalyst
+    data = DataAnalyst.objects.all().select_related('data_ciencia')
+    list_value = list(data.values())
+    
+    # Aperturas
+    data2 = opening.objects.all()
+    list_value2 = list(data2.values())
+
     result = data.values()
     list_result = [entry for entry in result]
     list_user = []
 
     for d in data:
         if d.data_analisis.first():
-            print("user",d.data_analisis.first())
             user = d.data_analisis.first().game.perfil.username.username
         else:
             print("No existe",d)
         list_user.append(user)
 
-    #print("parse",data.values())
-    #result = data.values()
-    print(type(list_result),"list_result",list_result)
-    print("list_user",type(list_user),list_user)
+   
 
+    df = pd.DataFrame(list_value)
+    df2 = pd.DataFrame(list_value2)
+
+    # Limpieza para calculo de Insight
+    df2 = df2.drop(['name_eco_ww', 'name_eco_dw', 'name_eco_lw','name_eco_b','name_eco_db','name_eco_lb','n_eco_ww','n_eco_dw','n_eco_lw','n_eco_b','n_eco_db','n_eco_lb'], axis=1)
+    
+    # Separar las 3 mejores aperturas por color
+    df2[['eco_ww_1','eco_ww_2','eco_ww_3']] = df2.eco_ww.str.split(pat=',',expand=True)
+    df2[['eco_dw_1','eco_dw_2','eco_dw_3']] = df2.eco_dw.str.split(pat=',',expand=True)
+    df2[['eco_lw_1','eco_lw_2','eco_lw_3']] = df2.eco_lw.str.split(pat=',',expand=True)
+    df2[['eco_b_1','eco_b_2','eco_b_3']] = df2.eco_b.str.split(pat=',',expand=True)
+    df2[['eco_db_1','eco_db_2','eco_db_3']] = df2.eco_db.str.split(pat=',',expand=True)
+    df2[['eco_lb_1','eco_lb_2','eco_lb_3']] = df2.eco_lb.str.split(pat=',',expand=True)
+    
+    # Borrar informacion no relevante para estudio
+    df2 = df2.drop(['eco_ww', 'eco_dw', 'eco_lw','eco_b','eco_db','eco_lb'], axis=1)
+    
+    # Join en las 2 tablas de informacion
+    inner_join = pd.merge(df, df2, how='inner',left_on='id',right_on='data_id')
+    
+    # Borrar id extras
+    dataframe = inner_join.drop(['id_y','data_id'], axis=1)
+    dataframe = dataframe.rename(columns= {'id_x':'Jugador'})
+
+    # Limpieza de data valores indeseados (-1, none)  
+    try:
+        dataframe = clean_dataframe(dataframe)
+    except Exception as e:
+        print(e)
+        print('Error en la funcion "clean_dataframe"\n')   
+
+    print("clean_dataframe")
+    print(dataframe)
+    dataframe.to_csv('example.csv')
+    
+    NORMALIZE = False
+    try:
+        if NORMALIZE:
+            dataframe_normalize = normalize(dataframe)
+        else:
+            dataframe_normalize = dataframe
+    
+    except Exception as e:
+        print(e)
+        print('Error en la normalizacion')
+    
+    scaled_df = pd.DataFrame(dataframe_normalize, columns= dataframe.columns)
+    print(scaled_df.columns)
+    print("scaled_df")
+    print(scaled_df)
+
+    scaled_df2 = scaled_df[[
+       'eco_ww_1', 'eco_dw_1', 
+       'eco_lw_1', 'eco_b_1',
+       'eco_db_1', 'eco_lb_1']]
+    
+    print("scaled_df2",scaled_df2)
+
+    #dividing_line = True
+    #corte_t = 0.06
+
+    try:
+       graph, cluster = do_cluster(scaled_df2)
+    except Exception as e:
+        print(e)
+        print('Error en la funcion "do_cluster"\n')
+    
     for y,x in enumerate(list_result):
         x["user"] = list_user[y]
-        print(type(x),"l",x)
+        x["cluster"] = cluster[y]
 
     len_user = len(list_result)
-
-    return render(request, 'Views/estilo.html', {'elo': elo , 'data': data, 'list_result':list_result, 'len_user':len_user})
+    return render(request, 'Views/estilo.html', {'elo': elo , 'data': data, 'list_result':list_result, 'len_user':len_user, 'graph':graph})
 
     #models.objects.count()
     #models.objects.first()

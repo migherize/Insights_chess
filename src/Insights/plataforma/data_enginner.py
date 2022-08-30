@@ -7,6 +7,7 @@ import re, csv
 import pandas as pd
 import requests
 from collections import Counter
+import random
 
 exp_jugadas = r'[0-9]+\.\s*[A-Za-z0-9+-=!?#]+\s[A-Za-z0-9+-=!?#]+|[0-9]+\.\s*[A-Za-z0-9+-=!?#]+'
 jugadas_white = r'^[0-9]+\.\s*[A-Za-z0-9+-=!?#]+'
@@ -116,7 +117,7 @@ def split_dataframe(df,user):
         print("tablas con Blancass**", (Counter(Eco_white_draw).most_common()[0][0]), Counter(Eco_white_draw).most_common()[0][1])        
         print("tablas con Negras**", (Counter(Eco_black_draw).most_common()[0][0]), Counter(Eco_black_draw).most_common()[0][1])        
         print("tablas con Blancas**", (Counter(Eco_white_lose).most_common()[0][0]), Counter(Eco_white_lose).most_common()[0][1])        
-        print("tablas con Blancas**", (Counter(Eco_black_lose).most_common()[0][0]), Counter(Eco_black_lose).most_common()[0][1])        
+        print("tablas con Negras**", (Counter(Eco_black_lose).most_common()[0][0]), Counter(Eco_black_lose).most_common()[0][1])        
 
         l_codigo_white_win = []
         l_num_white_win = []
@@ -142,7 +143,7 @@ def split_dataframe(df,user):
         l_num_black_lose = []
         l_name_black_lose = []
 
-
+        print("l_name_white_win", ope_white_win)
         
         for x in range(0,3):
             l_codigo_white_win.append(Counter(Eco_white_win).most_common()[x][0])
@@ -165,27 +166,29 @@ def split_dataframe(df,user):
             l_codigo_black_lose.append(Counter(Eco_black_lose).most_common()[x][0])
             l_num_black_lose.append(Counter(Eco_black_lose).most_common()[x][1])
             l_name_black_lose.append(Counter(ope_black_lose).most_common()[x][0])
+        
+        print("Eco_white_win", Eco_white_win)
 
-        codigo_white_win = str(l_codigo_white_win)
-        num_white_win = str(l_num_white_win)
-        opening_white_win = str(l_name_white_win)
-        codigo_black_win = str(l_codigo_black_win)
-        num_black_win = str(l_num_black_win)
-        opening_black_win = str(l_name_black_win)
+        codigo_white_win = ",".join(l_codigo_white_win)
+        num_white_win = ",".join([str(_) for _ in l_num_white_win])
+        opening_white_win = ",".join(l_name_white_win)
+        codigo_black_win = ",".join(l_codigo_black_win)
+        num_black_win = ",".join([str(_) for _ in l_num_black_win])
+        opening_black_win = ",".join(l_name_black_win)
         
-        codigo_white_draw = str(l_codigo_white_draw)
-        num_white_draw = str(l_num_white_draw)
-        opening_white_draw = str(l_name_white_draw)
-        codigo_black_draw = str(l_codigo_black_draw)
-        num_black_draw = str(l_num_black_draw)
-        opening_black_draw = str(l_name_black_draw)
+        codigo_white_draw = ",".join(l_codigo_white_draw)
+        num_white_draw = ",".join([str(_) for _ in l_num_white_draw])
+        opening_white_draw = ",".join(l_name_white_draw)
+        codigo_black_draw = ",".join(l_codigo_black_draw)
+        num_black_draw = ",".join([str(_) for _ in l_num_black_draw])
+        opening_black_draw = ",".join(l_name_black_draw)
         
-        codigo_white_lose = str(l_codigo_white_lose)
-        num_white_lose = str(l_num_white_lose)
-        opening_white_lose = str(l_name_white_lose)
-        codigo_black_lose = str(l_codigo_black_lose)
-        num_black_lose = str(l_num_black_lose)
-        opening_black_lose = str(l_name_black_lose)
+        codigo_white_lose = ",".join(l_codigo_white_lose)
+        num_white_lose = ",".join([str(_) for _ in l_num_white_lose])
+        opening_white_lose = ",".join(l_name_white_lose)
+        codigo_black_lose = ",".join(l_codigo_black_lose)
+        num_black_lose = ",".join([str(_) for _ in l_num_black_lose])
+        opening_black_lose = ",".join(l_name_black_lose)
 
     else:
         codigo_white_win = ''
@@ -225,10 +228,17 @@ def split_Header(info):
                 list_black.append(clean_text(j.replace(aux2[0],'')).strip())
             if aux3:
                 list_ECO.append(clean_text(j.replace(aux3[0],'').replace('?','-1')))
+            
             if aux4:
-                list_opening.append(clean_text(j.replace(aux4[0],'').replace('?','-1')))
+                list_opening.append(clean_text(j.replace(aux4[0],'').replace('?','-1')))                
+            
             if aux5:
                 list_result.append(clean_text(j.replace(aux5[0],'').replace('?','-1')))
+            else:
+                # lista random de 3 minimo
+                nameless = ['not name', 'without name', 'nameless']
+                name_less = nameless[random.randint(0, 2)]
+                list_result.append(name_less)
     
     return list_white,list_black,list_ECO,list_opening,list_result
 

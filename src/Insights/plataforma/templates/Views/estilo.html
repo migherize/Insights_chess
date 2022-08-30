@@ -17,6 +17,7 @@
             <th><abbr title="">Ganadas Negras</abbr></th>
             <th><abbr title="">Tablas Negras</abbr></th>
             <th><abbr title="">Perdidas Negras</abbr></th>
+            <th><abbr title="">Grupo</abbr></th>
           </tr>
         </thead>
         <tbody >
@@ -30,10 +31,13 @@
                 <th>{{ d.win_b }}</th>
                 <th>{{ d.draw_b }}</th>
                 <th>{{ d.lose_b }}</th>
+                <th>{{ d.cluster }}</th>
             </tr>
             {% endfor %}
         </tbody>
     </table></div></div>
-    
+    <div>
+      <img src="data:image/png;base64, {{graph}}" alt="no hay">
+    </div>
 </div>
 {% endblock %}
