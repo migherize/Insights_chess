@@ -29,6 +29,13 @@ html, body, #app {
     color: #f5f5f5;
 }
 
+.parrafo_estilo {
+  font-family: Arial; 
+  font-size: 25px; 
+  text-align: justify; 
+  text-justify: inter-word; 
+  text-indent: 3%;
+}
 
 #app {
   min-height: 100%;

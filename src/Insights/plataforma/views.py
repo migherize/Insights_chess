@@ -28,19 +28,19 @@ def insert_games(user,username):
         change_user(username)
 
     list_info, list_game = data_split(username)
-    list_white, list_black, list_result, list_ECO, list_Opening = split_Header(list_info)
+    list_white, list_black, list_ECO, list_Opening, list_result = split_Header(list_info)
     tupla_color, mov_white, mov_black = split_color(list_game)
 
-    print("list_info", len(list_info))
-    print("list_game", len(list_game))
-    print("list_white", len(list_white))
-    print("list_black", len(list_black))
-    print("list_result", len(list_result))
-    print("list_ECO", len(list_ECO))
-    print("list_Opening", len(list_Opening))
-    print("tupla_color", len(tupla_color))
-    print("mov_white", len(mov_white))
-    print("mov_black", len(mov_black))
+    #print("list_info", len(list_info))
+    #print("list_game", len(list_game))
+    #print("list_white", len(list_white))
+    #print("list_black", len(list_black))
+    #print("list_result", len(list_result))
+    #print("list_ECO", len(list_ECO))
+    #print("list_Opening", len(list_Opening))
+    #print("tupla_color", len(tupla_color))
+    #print("mov_white", len(mov_white))
+    #print("mov_black", len(mov_black))
     print("usuario", user)
     print("usuario", user.nick)
     print("rated", user.nick.id)
@@ -78,14 +78,14 @@ def insert_games(user,username):
                                     name_eco_lb=opening_black_lose,
                                     data=science)
 
-    print("LLEGUE")
-    print(len(list_ECO),"list_ECO",list_ECO)
-    print(len(list_Opening),"list_Opening",list_Opening)
-    print(len(list_result),"list_result",list_result)
-    print(len(list_white),"list_white", list_white)
-    print(len(list_black),"list_black",list_black)
+    #print("LLEGUE")
+    #print(len(list_ECO),"list_ECO",list_ECO)
+    #print(len(list_Opening),"list_Opening",list_Opening)
+    #print(len(list_result),"list_result",list_result)
+    #print(len(list_white),"list_white", list_white)
+    #print(len(list_black),"list_black",list_black)
 
-    for i in range(0,10):
+    for i in range(0,50):
         game = Games.objects.create(header_game = list_info[i], move_game = list_game[i], perfil_id = user.nick.id)
         titulos = Header.objects.create(event='1',site='2',date='3',white = list_white[i], elo_w= '4',elo_b='6', black = list_black[i] ,result = list_result[i],variant='8', eco = list_ECO[i], opening=list_Opening[i], game_id=game.id, scienc_id = science.id)
         movimientos = Moves.objects.create(white = mov_white[i], black = mov_black[i],game_id=game.id)
@@ -449,20 +449,31 @@ def estadisticas(request, username):
     data = DataAnalyst.objects.get(id=int(scienc))
     print("Id",scienc)
     print("aperturas",type(data.data_ciencia))
-    #alldata = DataAnalyst.objects.all()
-    #print("aperturas",vars(data.data_ciencia))
-    #dict_aperturas = data.data_ciencia.__dict__
-    #for clave, valor in dict_aperturas.items():
-    #    print(clave,valor)
-
-
-    #print("aperturas",data.data_ciencia.eco_db)
-    #print("aperturas",data.data_ciencia.eco_db)
     return render(request, 'Views/estadisticas.html', {'elo': elo , 'data': data})
 
 def insight(request, username):
     user = User.objects.get(username=username)
     elo = user.nick.rankings.all()
+    scienc = user.nick.partidas.first().header.scienc_id
+    user_info = DataAnalyst.objects.get(id=int(scienc))
+
+    v_blanca = str(user_info.data_ciencia.eco_ww).split(',')
+    v_nombre_blanca = str(user_info.data_ciencia.name_eco_ww).split(',')
+    v_num_blanca = str(user_info.data_ciencia.n_eco_ww).split(',')
+    v_negra = str(user_info.data_ciencia.eco_b).split(',')
+    v_nombre_negra = str(user_info.data_ciencia.name_eco_b).split(',')
+    v_num_negra = str(user_info.data_ciencia.n_eco_b).split(',')
+
+    user_aperturas = []
+    user_aperturas.append(v_blanca[0])
+    user_aperturas.append(v_nombre_blanca[0])
+    user_aperturas.append(v_num_blanca[0])
+    user_aperturas.append(v_negra[0])
+    user_aperturas.append(v_nombre_negra[0])
+    user_aperturas.append(v_num_negra[0])
+
+    dias =["v_blanca","v_nombre_blanca","v_num_blanca","v_negra","v_nombre_negra","v_num_negra"]
+    list_aperturas = {dias:temp for (dias,temp) in zip(dias,user_aperturas)}
     
     # DataAnalyst
     data = DataAnalyst.objects.all().select_related('data_ciencia')
@@ -552,43 +563,14 @@ def insight(request, username):
         print(e)
         print('Error en la funcion "do_cluster"\n')
     
+    print("user",username)
     for y,x in enumerate(list_result):
         x["user"] = list_user[y]
         x["cluster"] = cluster[y]
+        if x["user"] == username:
+            user_estilo = str(x["cluster"])
+
+    print("user_estilo",user_estilo)
 
     len_user = len(list_result)
-    return render(request, 'Views/estilo.html', {'elo': elo , 'data': data, 'list_result':list_result, 'len_user':len_user, 'graph':graph})
-
-    #models.objects.count()
-    #models.objects.first()
-    #models.objects.last()
-
-
-
-    #print("query",str(data.query))
-    
-    #for d in data:
-    #    #print("todo",d)
-    #    #print("id",d.id, type(d.id))
-    #    #print("user",d.data_analisis.first().game.perfil.username.username)
-    #    #print("user",type(d.data_analisis.first().game.perfil.username.username))
-        
-    #filter = DataAnalyst.objects.filter(data_analisis__game_id__perfil_id__id=1)
-    #print("filter",str(filter.query))
-    
-    #filter = DataAnalyst.objects.all().select_related('data_ciencia')
-    #print("select_related",str(filter.query))
-
-    #print("filter",filter)
-
-    #busqueda = DataAnalyst.objects.filter(opening = 67)
-    #print("busqueda",busqueda)
-    
-    #result = DataAnalyst.objects.values()
-    #list_result = [entry for entry in result]
-    #print("list_result",list_result)
-    #for l in list_result:
-    #    print("l",l)
-    #    print("l",l.data_analisis.first().game.perfil.username.username)
-
-    #data = opening.objects.get(id=int(aperturas.opening))
+    return render(request, 'Views/estilo.html', {'elo': elo , 'data': data, 'list_aperturas':list_aperturas,'user_info':user_info, 'user_estilo': user_estilo, 'list_result':list_result, 'len_user':len_user, 'graph':graph})

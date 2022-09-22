@@ -111,7 +111,7 @@ def split_dataframe(df,user):
     print("lose_black:",lose_black)
 
     if win_white != 0 and win_black != 0 and draw_white != 0 and draw_black != 0 and lose_white != 0 and lose_black != 0:
-        print((Counter(Eco_white_win).most_common()))
+        #print((Counter(Eco_white_win).most_common()))
         print("Victorias con Blancas**", (Counter(Eco_white_win).most_common()[0][0]), Counter(Eco_white_win).most_common()[0][1])        
         print("Victorias con Negras**", (Counter(Eco_black_win).most_common()[0][0]), Counter(Eco_black_win).most_common()[0][1])        
         print("tablas con Blancass**", (Counter(Eco_white_draw).most_common()[0][0]), Counter(Eco_white_draw).most_common()[0][1])        
@@ -143,7 +143,7 @@ def split_dataframe(df,user):
         l_num_black_lose = []
         l_name_black_lose = []
 
-        print("l_name_white_win", ope_white_win)
+        #print("l_name_white_win", ope_white_win)
         
         for x in range(0,3):
             l_codigo_white_win.append(Counter(Eco_white_win).most_common()[x][0])
@@ -167,7 +167,7 @@ def split_dataframe(df,user):
             l_num_black_lose.append(Counter(Eco_black_lose).most_common()[x][1])
             l_name_black_lose.append(Counter(ope_black_lose).most_common()[x][0])
         
-        print("Eco_white_win", Eco_white_win)
+        #print("Eco_white_win", Eco_white_win)
 
         codigo_white_win = ",".join(l_codigo_white_win)
         num_white_win = ",".join([str(_) for _ in l_num_white_win])
@@ -214,6 +214,7 @@ def split_Header(info):
     list_ECO = []
     list_opening = []
     list_result = []
+    print("pase")
     
     for i in info:
         for j in i:
@@ -223,23 +224,42 @@ def split_Header(info):
             aux4 = re.findall(r'^ECO',str(j))
             aux5 = re.findall(r'^Opening',str(j))
             if aux1:
-                list_white.append(clean_text(j.replace(aux1[0],'')).strip())
+                if len(list_white) == len(list_opening):
+                    list_white.append(clean_text(j.replace(aux1[0],'')).strip())
+                else:
+                    print("no tenia apertura",j)
+                    # lista random de 3 minimo
+                    nameless = ['not name', 'without name', 'nameless']
+                    name_less = nameless[random.randint(0, 2)]
+                    list_opening.append(name_less)
+                    list_white.append(clean_text(j.replace(aux1[0],'')).strip())
+
             if aux2:
                 list_black.append(clean_text(j.replace(aux2[0],'')).strip())
             if aux3:
-                list_ECO.append(clean_text(j.replace(aux3[0],'').replace('?','-1')))
-            
+                list_result.append(clean_text(j.replace(aux3[0],'').replace('?','-1')))
             if aux4:
-                list_opening.append(clean_text(j.replace(aux4[0],'').replace('?','-1')))                
-            
+                slash= re.search(r'\/',j)
+                if slash:
+                    j = j[:slash.start()]
+                    list_ECO.append(clean_text(j.replace(aux4[0],'').replace('?','-1')))
+                else:
+                    list_ECO.append(clean_text(j.replace(aux4[0],'').replace('?','-1')))
             if aux5:
-                list_result.append(clean_text(j.replace(aux5[0],'').replace('?','-1')))
-            else:
-                # lista random de 3 minimo
-                nameless = ['not name', 'without name', 'nameless']
-                name_less = nameless[random.randint(0, 2)]
-                list_result.append(name_less)
-    
+                list_opening.append(clean_text(j.replace(aux5[0],'').replace('?','-1')))  
+
+
+    if (len(list_opening)+1) == len(list_white):
+        nameless = ['not name', 'without name', 'nameless']
+        name_less = nameless[random.randint(0, 2)]
+        list_opening.append(name_less)
+
+    print("list_white", len(list_white))
+    print("list_black", len(list_black))
+    print("list_ECO", len(list_ECO))
+    print("list_opening", len(list_opening))
+    print("list_result", len(list_result))
+
     return list_white,list_black,list_ECO,list_opening,list_result
 
 
@@ -288,7 +308,7 @@ def split_color(game):
             moves_black = []
 
         else:
-            print("no entro",g.strip())
+            #print("no entro",g.strip())
             #print("list_white",len(list_white))
             moves = 'Forfeit',g.strip()
             tupla_color.append(moves)
@@ -313,7 +333,7 @@ def change_user(user):
                 jugadores = re.findall(r'^White\s|^Black\s',column_aux[0].replace('[','').replace(']',''))
                 if jugadores:
                     jugadores = re.findall(r'\"((?:\S\s?)+)\"',column_aux[0])
-                    print("jugadores",jugadores)
+                    #print("jugadores",jugadores)
                     lista.append(jugadores[0].replace('[','').replace(']','').replace('"','').replace('"',''))
 
         print(Counter(lista).most_common()[0][0])

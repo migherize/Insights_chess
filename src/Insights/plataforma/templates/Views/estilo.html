@@ -5,6 +5,72 @@
 
 {% block insight %}
 <div class="card">
+  <div class="card is-hidden1">
+    <div class="card-content">
+      <div class="content">  
+        <div class="c7 doc-content">
+          {% if user_estilo == '1' %}
+          <h1 class="title is-size-1"> <strong style="text-transform: capitalize;"> {{ user.username }}</strong> tu estilo es &#9823;&#65039;&#9876;&#65039;<strong> Tactico Agresivo </strong> &#9823;&#65039;&#9876;&#65039;</h1>
+          {% elif user_estilo == '2' %}
+          <h1 class="title is-size-1"> <strong style="text-transform: capitalize;"> {{ user.username }}</strong> tu estilo es <strong> Posicional Estrategico </strong> !</h1>
+          {% else %}
+          <h1 class="title is-size-1"> <strong style="text-transform: capitalize;"> {{ user.username }}</strong> tu estilo es <strong> Universal </strong> !</h1>
+          {% endif %}
+
+          <div class="content">
+            <p style="font-family: Arial; font-size: 25px; text-align: justify; text-justify: inter-word; text-indent: 3%;">
+              &#x1f44f;<strong style="text-transform: capitalize;"> {{ user.username }}</strong> tu estilo <strong> Tactico Agresivo</strong>&#9823;&#65039;&#9876;&#65039;, tienes muchos elementos
+              buenos. Te gustan las l&iacute;neas agudas&#x1f5e1;&#65039; y los &#x1f4a3;ataques al Rey&#x1f451; en el medio juego. Veo en tus partidas que
+              reaccionas de forma inmediata&#9889; ante cualquier combinaci&oacute;n y &nbsp;no te gusta cambiar las
+              piezas&#10060;&#9823;&#65039; en las partidas, las necesitas para el ataque y eso esta muy bien.&#x1f44d;
+            </p>
+            <h1 class="title is-3">Tus mejores aperturas son:</h1>
+            <p>
+              <h2 class="subtitle">Victorias Blancas y Negras:</h2>
+            </p>
+            <p style="font-family: Arial; font-size: 25px; text-align: justify; text-justify: inter-word; text-indent: 3%;">
+              Observo &#x1f440; que conoces mucho la apertura <strong>{{ list_aperturas.v_blanca }} </strong>
+              con nombre <strong>{{ list_aperturas.v_nombre_blanca }}</strong> con las piezas blancas, esa es una de tus grandes virtudes, has
+              ganado <strong> {{ list_aperturas.v_num_blanca }} </strong> partidas. Asimismo tambien conoces mucho la apertura <strong>{{ list_aperturas.v_negra }} </strong> que lleva el
+              nombre de <strong>{{ list_aperturas.v_nombre_negra }}</strong> con las piezas Negras, has logrado ganar <strong> {{ list_aperturas.v_num_negra }} </strong> partidas, &nbsp;esas
+              son tus grandes virtudes &#x1f44d;
+            </p>
+            
+            <p>
+              <h2 class="subtitle">Derrotas Blancas y Negras:</h2>
+            </p>
+            <p style="font-family: Arial; font-size: 25px; text-align: justify; text-justify: inter-word; text-indent: 3%;">
+              Me estoy dado cuenta en tus &#x1f4ca;estadisticas, que has perdido mucho con jugadores de bajo
+              y alto nivel con la apertura &lt;ECO&gt; con nombre &lt;opening&gt; llevando las piezas Blancas&#9898; y
+              pierdes tambi&eacute;n la apertura &lt;ECO&gt; con nombre &lt;opening&gt; llevando las piezas Negras&#9899;,
+              esas son tus grandes desventajas&#x1f614;, deber&iacute;as revisarlas&#x1f4da;, reforzarlas&#9874;&#65039; y
+              aprender de tus errores&#9940;. A continuaci&oacute;n te dejo las aperturas con la que m&aacute;s
+              frecuencias pierdes.</span></p>
+            </p>
+
+          </div>
+          <p class="c0"><span class="c3">Derrotas Blancas: </span></p>
+          <p class="c1"><span class="c3">Veo que has perdido mucho con jugadroes de bajo y alto nivel con la apertura
+                  &lt;ECO&gt; con nombre &lt;opening&gt;, esa es una de tus grandes desventajas, deberias revisar las
+                  siguientes 3 aperturas que es donde m&aacute;s obtienes derrotas con blancas.</span></p>
+          <p class="c0"><span class="c3">Derrotas Negras: </span></p>
+          <p class="c1"><span class="c3">Veo que has perdido mucho con jugadroes de bajo y alto nivel con la apertura
+                  &lt;ECO&gt; con nombre &lt;opening&gt;, esa es una de tus grandes desventajas, deberias revisar las
+                  siguientes 3 aperturas que es donde m&aacute;s obtienes derrotas con blancas.</span></p>
+          <p class="c0"><span class="c3">Consejos:<br>Ya que tu estilo es &lt;cluster&gt;, mi consejo para mejorar es:</span>
+          </p>
+          <ol class="c2 lst-kix_yz285529ld95-0 start" start="1">
+              <li class="c5 c8 li-bullet-0"><span class="c3">Revisa con detalle las aperturas de tus partidas perdidas.</span>
+              </li>
+              <li class="c5 c8 li-bullet-0"><span class="c3">Est&aacute;s cometiendo errores en el desarrollo de las piezas o
+                      en el medio juego de las partidas.</span></li>
+              <li class="c5 c8 li-bullet-0"><span class="c6">Tal vez la apertura no beneficia tu estilo de juego, prueba con
+                      otra apertura.</span></li>
+          </ol>
+      </div>
+      </div>
+    </div>
+  </div>
     <div class="card-header"><p class="card-header-title">Cantidad de Usarios: {{ len_user }}</p></div>
     <div class="card-content"><div class="content">
       <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
@@ -36,6 +102,7 @@
             {% endfor %}
         </tbody>
     </table></div></div>
+    
     <div>
       <img src="data:image/png;base64, {{graph}}" alt="no hay">
     </div>
