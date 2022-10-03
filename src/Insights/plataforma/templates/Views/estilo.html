@@ -10,20 +10,46 @@
       <div class="content">  
         <div class="c7 doc-content">
           {% if user_estilo == '1' %}
-          <h1 class="title is-size-1"> <strong style="text-transform: capitalize;"> {{ user.username }}</strong> tu estilo es &#9823;&#65039;&#9876;&#65039;<strong> Tactico Agresivo </strong> &#9823;&#65039;&#9876;&#65039;</h1>
-          {% elif user_estilo == '2' %}
-          <h1 class="title is-size-1"> <strong style="text-transform: capitalize;"> {{ user.username }}</strong> tu estilo es <strong> Posicional Estrategico </strong> !</h1>
-          {% else %}
-          <h1 class="title is-size-1"> <strong style="text-transform: capitalize;"> {{ user.username }}</strong> tu estilo es <strong> Universal </strong> !</h1>
-          {% endif %}
-
+          <h1 class="title is-size-1"> <strong style="text-transform: capitalize;"> {{ user.username }}</strong> tu estilo es &#9823;&#65039;&#9876;&#65039;<strong> Táctico Agresivo </strong> &#9823;&#65039;&#9876;&#65039;</h1>
+          
           <div class="content">
             <p style="font-family: Arial; font-size: 25px; text-align: justify; text-justify: inter-word; text-indent: 3%;">
-              &#x1f44f;<strong style="text-transform: capitalize;"> {{ user.username }}</strong> tu estilo <strong> Tactico Agresivo</strong>&#9823;&#65039;&#9876;&#65039;, tienes muchos elementos
+              &#x1f44f;<strong style="text-transform: capitalize;"> {{ user.username }}</strong> tu estilo <strong> Táctico Agresivo</strong>&#9823;&#65039;&#9876;&#65039;, tienes muchos elementos
               buenos. Te gustan las l&iacute;neas agudas&#x1f5e1;&#65039; y los &#x1f4a3;ataques al Rey&#x1f451; en el medio juego. Veo en tus partidas que
               reaccionas de forma inmediata&#9889; ante cualquier combinaci&oacute;n y &nbsp;no te gusta cambiar las
               piezas&#10060;&#9823;&#65039; en las partidas, las necesitas para el ataque y eso esta muy bien.&#x1f44d;
             </p>
+
+          {% elif user_estilo == '2' %}
+          <h1 class="title is-size-1"> <strong style="text-transform: capitalize;"> {{ user.username }}</strong> tu estilo es <strong> Posicional Estrategico </strong> !</h1>
+          <div class="content">
+            <p style="font-family: Arial; font-size: 25px; text-align: justify; text-justify: inter-word; text-indent: 3%;">
+              &#x1f44f;  {{ user.username }} tu estilo </span><span class="c10">Estratega T&eacute;cnico
+              </span><span class="c1">&#x1f9e0;&#x1f513;, se caracteriza en tener un repertorio&#x1f4da; de aperturas
+                  cerradas&#x1f512;, semicerradas o defensas irregulares, te inclinas por desarrollar las piezas&#x1f422;,
+                  tomar precauciones eres paciente y tomas tu tiempo&#9203; para realizar maniobras de transformaci&oacute;n
+                  de amenazas, mantienes un equilibrio entre piezas menores y mayores, para conseguir debilidades en el juego
+                  de tu contrincante, &nbsp;adem&aacute;s estudias cada posici&oacute;n y reconoce la transici&oacute;n del
+                  medio juego al final, adem&aacute;s buscas reconocer temas de obstrucci&oacute;n, finales b&aacute;sicos,
+                  torres, piezas menores y peones.
+            </p>
+            {% elif user_estilo == '0' %}
+          <h1 class="title is-size-1"> <strong style="text-transform: capitalize;"> {{ user.username }}</strong> tu estilo es <strong> Universal </strong> !</h1>
+          
+          <div class="content">
+            <p style="font-family: Arial; font-size: 25px; text-align: justify; text-justify: inter-word; text-indent: 3%;">
+              &#x1f44f;  {{ user.username }} tu estilo </span><span class="c10">Universal </span><span
+            class="c5">&#x1f9d1;&zwj;&#x1f393;</span><span class="c1">, se caracteriza por a&ntilde;os de experiencia y
+            juego de muchas &#9823;&#65039;partidas, su principal objetivo es reconocer cada movimiento al realizar una
+            &#9876;&#65039;t&aacute;ctica, no&#x1f6ab; se inclina a ninguno de los 2
+            &#9823;&#65039;&#9876;&#65039;estilos&#x1f9e0;&#x1f513; de juego, solo aplica conceptos adecuados en
+            momentos determinados, conoce los finales, presta atenci&oacute;n en los aspectos psicol&oacute;gicos y
+            emocionales, controla el temperamento y acostumbra a estar siempre motivado, centra su atenci&oacute;n en
+            los detalles &nbsp;hasta el m&aacute;s m&iacute;nimo antes de cada torneo.
+            </p>
+          
+          {% endif %}
+
             <h1 class="title is-3">Tus mejores aperturas son:</h1>
             <p>
               <h2 class="subtitle">Victorias Blancas y Negras:</h2>
@@ -31,7 +57,7 @@
             <p style="font-family: Arial; font-size: 25px; text-align: justify; text-justify: inter-word; text-indent: 3%;">
               Observo &#x1f440; que conoces mucho la apertura <strong>{{ list_aperturas.v_blanca }} </strong>
               con nombre <strong>{{ list_aperturas.v_nombre_blanca }}</strong> con las piezas blancas, esa es una de tus grandes virtudes, has
-              ganado <strong> {{ list_aperturas.v_num_blanca }} </strong> partidas. Asimismo tambien conoces mucho la apertura <strong>{{ list_aperturas.v_negra }} </strong> que lleva el
+              ganado <strong> {{ list_aperturas.v_num_blanca }} </strong> partidas. Asimismo también conoces mucho la apertura <strong>{{ list_aperturas.v_negra }} </strong> que lleva el
               nombre de <strong>{{ list_aperturas.v_nombre_negra }}</strong> con las piezas Negras, has logrado ganar <strong> {{ list_aperturas.v_num_negra }} </strong> partidas, &nbsp;esas
               son tus grandes virtudes &#x1f44d;
             </p>
@@ -40,33 +66,25 @@
               <h2 class="subtitle">Derrotas Blancas y Negras:</h2>
             </p>
             <p style="font-family: Arial; font-size: 25px; text-align: justify; text-justify: inter-word; text-indent: 3%;">
-              Me estoy dado cuenta en tus &#x1f4ca;estadisticas, que has perdido mucho con jugadores de bajo
-              y alto nivel con la apertura &lt;ECO&gt; con nombre &lt;opening&gt; llevando las piezas Blancas&#9898; y
-              pierdes tambi&eacute;n la apertura &lt;ECO&gt; con nombre &lt;opening&gt; llevando las piezas Negras&#9899;,
+              Me estoy dado cuenta en tus &#x1f4ca;estadísticas, que has perdido mucho con jugadores de bajo
+              y alto nivel con la apertura <strong>{{list_aperturas.d_blanca}}</strong> con nombre <strong>{{list_aperturas.d_nombre_blanca}}</strong> llevando las piezas Blancas&#9898; y
+              pierdes tambi&eacute;n la apertura <strong>{{list_aperturas.d_negra}}</strong> con nombre <strong>{{list_aperturas.d_nombre_negra}}</strong> llevando las piezas Negras&#9899;,
               esas son tus grandes desventajas&#x1f614;, deber&iacute;as revisarlas&#x1f4da;, reforzarlas&#9874;&#65039; y
               aprender de tus errores&#9940;. A continuaci&oacute;n te dejo las aperturas con la que m&aacute;s
-              frecuencias pierdes.</span></p>
+              frecuencia pierdes.</span></p>
             </p>
-
+            
+            <p>
+              <h2 class="subtitle">Consejos Para Mejorar tu Estilo:</h2>
+            </p>
+            <p style="font-family: Arial; font-size: 25px; text-align: justify; text-justify: inter-word; text-indent: 3%;">
+            <ul style="font-family: Arial; font-size: 25px; text-align: justify; text-justify: inter-word; text-indent: 3%;">
+              <li>Revisa con detalle las aperturas de tus partidas perdidas.</li>
+              <li>Est&aacute;s cometiendo errores en el desarrollo de las piezas o en el medio juego de las partidas.</li>
+              <li>Tal vez la apertura no beneficia tu estilo de juego, prueba con otra apertura.</li>
+            </ul>
+            </p>
           </div>
-          <p class="c0"><span class="c3">Derrotas Blancas: </span></p>
-          <p class="c1"><span class="c3">Veo que has perdido mucho con jugadroes de bajo y alto nivel con la apertura
-                  &lt;ECO&gt; con nombre &lt;opening&gt;, esa es una de tus grandes desventajas, deberias revisar las
-                  siguientes 3 aperturas que es donde m&aacute;s obtienes derrotas con blancas.</span></p>
-          <p class="c0"><span class="c3">Derrotas Negras: </span></p>
-          <p class="c1"><span class="c3">Veo que has perdido mucho con jugadroes de bajo y alto nivel con la apertura
-                  &lt;ECO&gt; con nombre &lt;opening&gt;, esa es una de tus grandes desventajas, deberias revisar las
-                  siguientes 3 aperturas que es donde m&aacute;s obtienes derrotas con blancas.</span></p>
-          <p class="c0"><span class="c3">Consejos:<br>Ya que tu estilo es &lt;cluster&gt;, mi consejo para mejorar es:</span>
-          </p>
-          <ol class="c2 lst-kix_yz285529ld95-0 start" start="1">
-              <li class="c5 c8 li-bullet-0"><span class="c3">Revisa con detalle las aperturas de tus partidas perdidas.</span>
-              </li>
-              <li class="c5 c8 li-bullet-0"><span class="c3">Est&aacute;s cometiendo errores en el desarrollo de las piezas o
-                      en el medio juego de las partidas.</span></li>
-              <li class="c5 c8 li-bullet-0"><span class="c6">Tal vez la apertura no beneficia tu estilo de juego, prueba con
-                      otra apertura.</span></li>
-          </ol>
       </div>
       </div>
     </div>
@@ -97,7 +115,15 @@
                 <th>{{ d.win_b }}</th>
                 <th>{{ d.draw_b }}</th>
                 <th>{{ d.lose_b }}</th>
-                <th>{{ d.cluster }}</th>
+                {% if d.cluster == 1 %}
+                <th>Tactico</th>
+                {% elif d.cluster == 2 %}
+                <th>Estratega</th>
+                {% elif d.cluster == 0 %}
+                <th>Universal</th>
+                {% else %}
+                <th>No tienes</th>
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>

@@ -456,13 +456,22 @@ def insight(request, username):
     elo = user.nick.rankings.all()
     scienc = user.nick.partidas.first().header.scienc_id
     user_info = DataAnalyst.objects.get(id=int(scienc))
-
+    # Victorias
     v_blanca = str(user_info.data_ciencia.eco_ww).split(',')
     v_nombre_blanca = str(user_info.data_ciencia.name_eco_ww).split(',')
     v_num_blanca = str(user_info.data_ciencia.n_eco_ww).split(',')
     v_negra = str(user_info.data_ciencia.eco_b).split(',')
     v_nombre_negra = str(user_info.data_ciencia.name_eco_b).split(',')
     v_num_negra = str(user_info.data_ciencia.n_eco_b).split(',')
+   
+    # Derrotas
+    d_blanca = str(user_info.data_ciencia.eco_lw).split(',')
+    d_nombre_blanca = str(user_info.data_ciencia.name_eco_lw).split(',')
+    d_num_blanca = str(user_info.data_ciencia.n_eco_lw).split(',')
+    d_negra = str(user_info.data_ciencia.eco_lb).split(',')
+    d_nombre_negra = str(user_info.data_ciencia.name_eco_lb).split(',')
+    d_num_negra = str(user_info.data_ciencia.n_eco_lb).split(',')
+
 
     user_aperturas = []
     user_aperturas.append(v_blanca[0])
@@ -471,8 +480,15 @@ def insight(request, username):
     user_aperturas.append(v_negra[0])
     user_aperturas.append(v_nombre_negra[0])
     user_aperturas.append(v_num_negra[0])
+    
+    user_aperturas.append(d_blanca[0])
+    user_aperturas.append(d_nombre_blanca[0])
+    user_aperturas.append(d_num_blanca[0])
+    user_aperturas.append(d_negra[0])
+    user_aperturas.append(d_nombre_negra[0])
+    user_aperturas.append(d_num_negra[0])
 
-    dias =["v_blanca","v_nombre_blanca","v_num_blanca","v_negra","v_nombre_negra","v_num_negra"]
+    dias =["v_blanca","v_nombre_blanca","v_num_blanca","v_negra","v_nombre_negra","v_num_negra","d_blanca","d_nombre_blanca","d_num_blanca","d_negra","d_nombre_negra","d_num_negra"]
     list_aperturas = {dias:temp for (dias,temp) in zip(dias,user_aperturas)}
     
     # DataAnalyst
@@ -554,9 +570,6 @@ def insight(request, username):
     
     print("scaled_df2",scaled_df2)
 
-    #dividing_line = True
-    #corte_t = 0.06
-
     try:
        graph, cluster = do_cluster(scaled_df2)
     except Exception as e:
@@ -565,12 +578,26 @@ def insight(request, username):
     
     print("user",username)
     for y,x in enumerate(list_result):
+        # Info de user
         x["user"] = list_user[y]
         x["cluster"] = cluster[y]
+        print("user",x["user"])
+        print("cluster",x["cluster"])
+        print(" list_result[y]", list_result[y]["cluster"])
+
         if x["user"] == username:
             user_estilo = str(x["cluster"])
+        
+        # Cluster        
+        if str(x["user"]) == 'jugador_tactico':
+            list_result[y]["cluster"] = 1
+        if str(x["user"]) == 'jugador_posicional':
+            list_result[y]["cluster"] = 2
+        if str(x["user"]) == 'jugador_universal':
+            list_result[y]["cluster"] = 0
 
     print("user_estilo",user_estilo)
+    print("list_result",list_result)
 
     len_user = len(list_result)
     return render(request, 'Views/estilo.html', {'elo': elo , 'data': data, 'list_aperturas':list_aperturas,'user_info':user_info, 'user_estilo': user_estilo, 'list_result':list_result, 'len_user':len_user, 'graph':graph})

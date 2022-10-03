@@ -15,13 +15,11 @@ jugadas_black = r'\s+[A-Za-z0-9+-=!?#]+$'
 
 #constanst
 split_path = '/Users/migherize/Sourcetree/InsightsChess/src/Insights/media'
-
-
-
 input_path = '/Users/migherize/SourceTree/InsightsChess/src/Data_enginner/input_request'
 output_split_path = '/Users/migherize/SourceTree/InsightsChess/src/Data_enginner/output_split'
 join_path = '/Users/migherize/SourceTree/InsightsChess/src/Data_enginner/join_split'
 output = '/Users/migherize/SourceTree/InsightsChess/src/Data_enginner/output'
+
 workname = 'data.pgn'
 base_url = "https://lichess.org/api"
 
